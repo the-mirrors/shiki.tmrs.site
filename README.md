@@ -1,0 +1,3 @@
+# Shikijs documentation zh_CN translation
+
+> Work in progress...
