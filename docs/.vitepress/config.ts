@@ -13,8 +13,8 @@ import vite from './vite.config'
 
 const GUIDES: DefaultTheme.NavItemWithLink[] = [
   { text: '快速开始', link: '/guide/' },
-  { text: '安装和基本使用', link: '/guide/install' },
-  { text: '捆绑包', link: '/guide/bundles' },
+  { text: '安装与基本使用', link: '/guide/install' },
+  { text: '捆绑预设', link: '/guide/bundles' },
   { text: '双颜色主题', link: '/guide/dual-themes' },
   { text: '简写', link: '/guide/shorthands' },
   { text: '最佳性能实践', link: '/guide/best-performance' },
@@ -191,15 +191,15 @@ export default withMermaid(defineConfig({
       {
         '/': [
           {
-            text: 'Guide',
+            text: '指南',
             items: GUIDES,
           },
           {
-            text: 'Integrations',
+            text: '集成',
             items: INTEGRATIONS,
           },
           {
-            text: 'References',
+            text: '参考',
             items: REFERENCES,
           },
         ],
@@ -235,6 +235,15 @@ export default withMermaid(defineConfig({
           },
         },
       },
+    },
+
+    outline: {
+      label: '本页目录',
+    },
+
+    docFooter: {
+      prev: '上一页',
+      next: '下一页',
     },
 
     socialLinks: [

@@ -2,13 +2,13 @@
 outline: deep
 ---
 
-# Installation & Usage
+# 安装与基本使用
 
 <Badges name="shiki" />
 
-## Installation
+## 安装
 
-Install via npm, or see [CDN Usage](#cdn-usage):
+你可以通过 npm 仓库安装 Shiki，或者[使用 CDN](#使用-cdn)：
 ::: code-group
 
 ```sh [npm]
@@ -33,38 +33,38 @@ deno add npm:shiki
 
 :::
 
-## Integrations
+## 使用集成
 
-We also provide some integrations:
+我们还提供了一些集成插件：
 
-- [markdown-it Plugin](/packages/markdown-it)
-- [Rehype Plugin](/packages/rehype)
-- [TypeScript Twoslash Integration](/packages/twoslash)
-- [Monaco Editor Syntax Highlight](/packages/monaco)
-- [CLI](/packages/cli)
-- [Common Transformers](/packages/transformers)
+- [markdown-it 插件](/packages/markdown-it)
+- [Rehype 插件](/packages/rehype)
+- [TypeScript Twoslash 集成](/packages/twoslash)
+- [Monaco Editor 语法高亮](/packages/monaco)
+- [CLI 工具](/packages/cli)
+- [常用变换器](/packages/transformers)
 
-## Usage
+## 使用方法
 
-### Shorthands
+### 简写函数
 
-The quickest way to get started with `shiki` is to use the provided shorthand functions. These will load the necessary themes and languages on demand, and automatically cache them in memory.
+使用 `shiki` 最快的方式是使用简写，它们会按需加载必要的主题和语言，并自动在内存中缓存。
 
-Passing your code snippet to the `codeToHtml` function with the `lang` and `theme` specified, it will return a highlighted HTML string that you can embed in your page. The generated HTML contains inline style for each token, so you don't need extra CSS to style it.
+将代码片段传入 `codeToHtml` 函数，并指定 `lang` 和 `theme`，它将会返回一个高亮的 HTML 字符串，你可以直接将它们嵌入页面中。这些生成的 HTML 包含每个 token 的内联样式，因此无需额外的 CSS 即可渲染所有的样式。
 
 ```ts twoslash
 import { codeToHtml } from 'shiki'
 
-const code = 'const a = 1' // input code
+const code = 'const a = 1' // 输入代码
 const html = await codeToHtml(code, {
   lang: 'javascript',
   theme: 'vitesse-dark'
 })
 
-console.log(html) // highlighted html string
+console.log(html) // 高亮后的 HTML 字符串
 ```
 
-Going a bit advanced, you can also use `codeToTokens` or `codeToHast` to get the intermediate data structure, and render them by yourself:
+你也可以使用 `codeToTokens` 或 `codeToHast` 获取中间数据结构，然后自行渲染：
 
 ```ts twoslash theme:min-dark
 import { codeToTokens } from 'shiki'
@@ -84,49 +84,49 @@ const hast = await codeToHast('.text-red { color: red; }', {
 })
 ```
 
-### Highlighter Usage
+### 使用 Highlighter
 
-The [shorthands](#shorthands) we provided are executed asynchronously as we use WASM and load themes and languages on demand internally. In some cases, you may need to highlight code synchronously, so we provide the `createHighlighter` function to create a highlighter instance that can later be used synchronously.
+Shiki 提供的[简写函数](#简写函数)是异步执行的，其使用 WASM 并按需加载主题和语言。在某些情况下，你可能需要同步地进行语法高亮，因此 Shiki 提供了 `createHighlighter` 函数来创建一个 Highlighter 实例，之后可同步调用。
 
-The usage is pretty much the same as with `codeToHtml`, where each theme and language file is a dynamically imported ES module. It would be better to list the languages and themes **explicitly** to have the best performance.
+其用法与 `codeToHtml` 基本相同，每个主题和语言文件都是动态导入的 ES 模块。注意，为了获得最佳性能，建议**显式列出**所需的主题和语言。
 
 ```ts twoslash theme:nord
 import { createHighlighter } from 'shiki'
 
-// `createHighlighter` is async, it initializes the internal and
-// loads the themes and languages specified.
+// `createHighlighter` 是异步的，它会初始化内部环境
+// 并加载指定的主题和语言。
 const highlighter = await createHighlighter({
   themes: ['nord'],
   langs: ['javascript'],
 })
 
-// then later you can use `highlighter.codeToHtml` synchronously
-// with the loaded themes and languages.
+// 之后可以同步地使用 `highlighter.codeToHtml`
+// 调用已加载的主题和语言。
 const code = highlighter.codeToHtml('const a = 1', {
   lang: 'javascript',
   theme: 'nord'
 })
 ```
 
-:::info Important Note
-Highlighter instance should be **long-lived singleton**. You might need to cache it somewhere and reuse it across your application. Avoid calling `createHighlighter` in hot functions or loops.
+:::info 重要提示
+Highlighter 实例应作为**长生命周期的单例**使用。建议在某处缓存该实例，并在整个应用中复用。应该避免在高频调用的函数或循环中反复调用 `createHighlighter`。
 
-If running on Node.js, we recommend using the [Shorthands](#shorthands) which manages the highlighter instance and dynamic theme/language loading for you.
+若在 Node.js 环境中运行，推荐使用 [简写函数](#简写函数)，它会自动管理 Highlighter 实例以及主题和语言的动态加载。
 :::
 
-Additionally, if you want to load themes and languages after the highlighter is created, you can use the `loadTheme` and `loadLanguage` methods.
+此外，如果希望在 Highlighter 创建后加载主题或语言，可以使用 `loadTheme` 和 `loadLanguage` 方法。
 
 ```ts twoslash
 import { createHighlighter } from 'shiki'
 
 const highlighter = await createHighlighter({ themes: [], langs: [] })
 // ---cut---
-// load themes and languages after creation
+// 创建后加载主题和语言
 await highlighter.loadTheme('vitesse-light')
 await highlighter.loadLanguage('css')
 ```
 
-Since Shiki v1.0, it requires all themes and languages to be loaded explicitly.
+自 Shiki v1.0 起，要求所有主题和语言必须显式加载。
 
 ```ts theme:slack-dark twoslash
 import { createHighlighter } from 'shiki'
@@ -140,14 +140,14 @@ highlighter.codeToHtml(
   'const a = 1',
   { lang: 'javascript', theme: 'slack-dark' }
 )
-// @error: Throw error, `javascript` is not loaded
+// @error: 抛出错误，`javascript` 未加载
 
-await highlighter.loadLanguage('javascript') // load the language
+await highlighter.loadLanguage('javascript') // 加载该语言
 
-// now it works
+// 现在可以正常工作
 ```
 
-If you want to load all themes and languages (not recommended), you can iterate over all keys from `bundledLanguages` and `bundledThemes`.
+如果希望一次性加载所有主题和语言（并不推荐），可以遍历 `bundledLanguages` 和 `bundledThemes` 中的所有键。
 
 ```ts twoslash theme:poimandres
 import { bundledLanguages, bundledThemes, createHighlighter } from 'shiki'
@@ -163,21 +163,21 @@ highlighter.codeToHtml('const a = 1', {
 })
 ```
 
-### Fine-grained Bundle
+### 细粒捆绑预设
 
-When importing `shiki`, all the themes and languages are bundled as async chunks. Normally it won't be a concern to you as they are not being loaded if you don't use them. In some cases, if you want to control what to bundle, you can use the core and compose your own bundle.
+导入 `shiki` 时，所有主题和语言都会作为异步代码块被打包。通常情况下，只要你不使用它们，它们就不会被加载，因此不需要考虑。但在某些场景下你希望控制打包的内容，你可以使用核心模块自行组合打包。
 
-Check out the [Fine-grained Bundle](/guide/bundles#fine-grained-bundle) section for more details.
+更多细节请参阅[细粒度捆绑包](/guide/bundles#fine-grained-bundle)。
 
-### Bundle Presets
+### 捆绑预设
 
-We also provide some pre-composed bundles for you to use easily, you can learn more about them in the [bundles section](/guide/bundles).
+我们也提供了一些预配置的包方案，便于直接使用，详情请见[捆绑预设](/guide/bundles)。
 
-### CJS Usage
+### 使用 CJS
 
-`shiki` is published as ESM-only to reduce the package size. It's still possible to use it in CJS, as Node.js supports importing ESM modules dynamically in CJS.
+`shiki` 仅以 ESM 格式发布，以减小包体积。但你仍然可以在 CJS 中使用，因为 Node.js 支持在 CJS 中动态导入 ESM 模块。
 
-For example, the following ESM code:
+例如，以下 ESM 代码：
 
 ```ts twoslash
 // ESM
@@ -196,7 +196,7 @@ async function main() {
 }
 ```
 
-Can be written in CJS as:
+可以改写为 CJS：
 
 ```ts twoslash
 // CJS
@@ -215,18 +215,18 @@ async function main() {
 }
 ```
 
-### CDN Usage
+### 使用 CDN
 
-To use `shiki` in the browser via CDN, you can use [esm.run](https://esm.run) or [esm.sh](https://esm.sh).
+若想通过 CDN 在浏览器中使用 `shiki`，可以使用 [esm.run](https://esm.run) 或 [esm.sh](https://esm.sh)。
 
 ```html theme:rose-pine
 <body>
   <div id="foo"></div>
 
   <script type="module">
-    // be sure to specify the exact version
+    // 请务必指定确切版本
     import { codeToHtml } from 'https://esm.sh/shiki@3.0.0'
-    // or
+    // 或
     // import { codeToHtml } from 'https://esm.run/shiki@3.0.0'
 
     const foo = document.getElementById('foo')
@@ -238,15 +238,15 @@ To use `shiki` in the browser via CDN, you can use [esm.run](https://esm.run) or
 </body>
 ```
 
-It's quite efficient as it will only load the languages and themes on demand. For the code snippet above, only four requests will be fired (`shiki`, `@shikijs/themes/vitesse-light`, `@shikijs/langs/javascript`, `shiki/wasm.mjs`), with around 200KB data transferred in total.
+这种方式效率很高，仅按需加载所需的语言和主题。以上代码片段只会发起四个请求（`shiki`、`@shikijs/themes/vitesse-light`、`@shikijs/langs/javascript`、`shiki/wasm.mjs`），总共传输约 200KB 数据。
 
-[Demo](https://jsfiddle.net/t7brz23v/)
+[演示](https://jsfiddle.net/t7brz23v/)
 
 ### Cloudflare Workers
 
-Cloudflare Workers [does not support initializing WebAssembly from binary data](https://community.cloudflare.com/t/fixed-cloudflare-workers-slow-with-moderate-sized-webassembly-bindings/184668/3), so the default wasm build won't work. You need to upload the wasm as assets and import it directly.
+Cloudflare Workers [不支持从二进制数据初始化 WebAssembly](https://community.cloudflare.com/t/fixed-cloudflare-workers-slow-with-moderate-sized-webassembly-bindings/184668/3)，因此默认的 WASM 构建无法工作。你需要将 WASM 文件作为资源上传并直接导入。
 
-Meanwhile, it's also recommended to use the [Fine-grained Bundle](#fine-grained-bundle) approach to reduce the bundle size.
+同时，也建议使用[细粒捆绑预设](#细粒捆绑预设)方法来减小包体积。
 
 ```ts twoslash theme:nord
 // @noErrors
@@ -254,7 +254,7 @@ import js from '@shikijs/langs/javascript'
 import nord from '@shikijs/themes/nord'
 import { createHighlighterCore, loadWasm } from 'shiki/core'
 
-// import wasm as assets
+// 将 WASM 作为资源导入
 await loadWasm(import('shiki/onig.wasm'))
 
 export default {
