@@ -12,61 +12,61 @@ import { version } from '../../package.json'
 import vite from './vite.config'
 
 const GUIDES: DefaultTheme.NavItemWithLink[] = [
-  { text: 'Getting Started', link: '/guide/' },
-  { text: 'Installation & Usage', link: '/guide/install' },
-  { text: 'Bundles', link: '/guide/bundles' },
-  { text: 'Dual Themes', link: '/guide/dual-themes' },
-  { text: 'Shorthands', link: '/guide/shorthands' },
-  { text: 'Best Performance Practices', link: '/guide/best-performance' },
-  { text: 'Decorations', link: '/guide/decorations' },
-  { text: 'Transformers', link: '/guide/transformers' },
-  { text: 'Theme Colors Manipulation', link: '/guide/theme-colors' },
-  { text: 'RegExp Engines', link: '/guide/regex-engines' },
-  { text: 'Synchronous Usage', link: '/guide/sync-usage' },
-  { text: 'Grammar State', link: '/guide/grammar-state' },
-  { text: 'Custom Themes', link: '/guide/load-theme' },
-  { text: 'Custom Languages', link: '/guide/load-lang' },
-  { text: 'Migration', link: '/guide/migrate' },
-  { text: 'Compatibility Build', link: '/guide/compat' },
+  { text: '快速开始', link: '/guide/' },
+  { text: '安装和基本使用', link: '/guide/install' },
+  { text: '捆绑包', link: '/guide/bundles' },
+  { text: '双颜色主题', link: '/guide/dual-themes' },
+  { text: '简写', link: '/guide/shorthands' },
+  { text: '最佳性能实践', link: '/guide/best-performance' },
+  { text: '代码装饰', link: '/guide/decorations' },
+  { text: '代码变换', link: '/guide/transformers' },
+  { text: '主题颜色控制', link: '/guide/theme-colors' },
+  { text: '正则表达式引擎', link: '/guide/regex-engines' },
+  { text: '使用同步代码', link: '/guide/sync-usage' },
+  { text: '语法状态', link: '/guide/grammar-state' },
+  { text: '自定义主题', link: '/guide/load-theme' },
+  { text: '自定义语言', link: '/guide/load-lang' },
+  { text: '迁移', link: '/guide/migrate' },
+  { text: '兼容性构建', link: '/guide/compat' },
 ]
 
 const REFERENCES: DefaultTheme.NavItemWithLink[] = [
-  { text: 'Themes', link: '/themes' },
-  { text: 'Languages', link: '/languages' },
-  { text: 'JavaScript Engine Compatibility', link: '/references/engine-js-compat' },
+  { text: '主题', link: '/themes' },
+  { text: '语言', link: '/languages' },
+  { text: 'JavaScript 引擎兼容性', link: '/references/engine-js-compat' },
 ]
 
 const INTEGRATIONS: DefaultTheme.NavItemWithLink[] = [
   { text: 'TypeScript Twoslash', link: '/packages/twoslash' },
   { text: 'markdown-it', link: '/packages/markdown-it' },
   { text: 'Rehype', link: '/packages/rehype' },
-  { text: 'Monaco Editor', link: '/packages/monaco' },
+  { text: 'Monaco 编辑器', link: '/packages/monaco' },
   { text: 'VitePress', link: '/packages/vitepress' },
   { text: 'Nuxt', link: '/packages/nuxt' },
   { text: 'Next', link: '/packages/next' },
   { text: 'Astro', link: '/packages/astro' },
-  { text: 'Common Transformers', link: '/packages/transformers' },
-  { text: 'Colorized Brackets', link: '/packages/colorized-brackets' },
-  { text: 'Codegen', link: '/packages/codegen' },
+  { text: '常见变换器', link: '/packages/transformers' },
+  { text: '括号着色', link: '/packages/colorized-brackets' },
+  { text: '代码生成', link: '/packages/codegen' },
   { text: 'CLI', link: '/packages/cli' },
 ]
 
 const BLOGS: DefaultTheme.NavItemWithLink[] = [
   { text: 'Shiki v3.0', link: '/blog/v3' },
   { text: 'Shiki v2.0', link: '/blog/v2' },
-  { text: 'The Evolution of Shiki v1.0', link: 'https://nuxt.com/blog/shiki-v1' },
+  { text: 'Shiki v1.0 的进化', link: 'https://nuxt.com/blog/shiki-v1' },
 ]
 
 const VERSIONS: (DefaultTheme.NavItemWithLink | DefaultTheme.NavItemChildren)[] = [
   { text: `v${version} (current)`, link: '/' },
-  { text: `Release Notes`, link: 'https://github.com/shikijs/shiki/releases' },
-  { text: `Contributing`, link: 'https://github.com/shikijs/shiki/blob/main/CONTRIBUTING.md' },
+  { text: `发布日志`, link: 'https://github.com/shikijs/shiki/releases' },
+  { text: `贡献`, link: 'https://github.com/shikijs/shiki/blob/main/CONTRIBUTING.md' },
   {
     items: [
-      { text: 'Migration from v2.0', link: '/blog/v3' },
-      { text: 'Migration from v1.0', link: '/blog/v2' },
-      { text: 'Migration from v0.14', link: '/guide/migrate#migrate-from-v0-14' },
-      { text: 'Migration from Shikiji', link: '/guide/migrate#migrate-from-shikiji' },
+      { text: '从 v2.0 迁移', link: '/blog/v3' },
+      { text: '从 v1.0 迁移', link: '/blog/v2' },
+      { text: '从 v0.14 迁移', link: '/guide/migrate#migrate-from-v0-14' },
+      { text: '从 Shikiji 迁移', link: '/guide/migrate#migrate-from-shikiji' },
     ],
   },
 ]
@@ -74,7 +74,7 @@ const VERSIONS: (DefaultTheme.NavItemWithLink | DefaultTheme.NavItemChildren)[] 
 // https://vitepress.dev/reference/site-config
 export default withMermaid(defineConfig({
   title: 'Shiki',
-  description: 'A beautiful and powerful syntax highlighter',
+  description: '美观而强大的语法高亮工具',
   markdown: {
     theme: {
       light: 'vitesse-light',
@@ -157,7 +157,7 @@ export default withMermaid(defineConfig({
     logo: '/logo.svg',
     nav: [
       {
-        text: 'Guide',
+        text: '指南',
         items: [
           {
             items: GUIDES,
@@ -165,20 +165,24 @@ export default withMermaid(defineConfig({
         ],
       },
       {
-        text: 'Integrations',
+        text: '集成',
         items: INTEGRATIONS,
       },
       {
-        text: 'References',
+        text: '参考',
         items: REFERENCES,
       },
       {
-        text: 'Blog',
+        text: '博客',
         items: BLOGS,
       },
       {
         text: `v${version}`,
         items: VERSIONS,
+      },
+      {
+        text: '翻译文档仓库',
+        link: 'https://github.com/the-mirrors/shiki.tmrs.site',
       },
     ],
 
@@ -203,11 +207,34 @@ export default withMermaid(defineConfig({
     ),
 
     editLink: {
-      pattern: 'https://github.com/shikijs/shiki/edit/main/docs/:path',
-      text: 'Suggest changes to this page',
+      pattern: 'https://github.com/the-mirrors/shiki.tmrs.site/edit/main/docs/:path',
+      text: '对翻译提出修改（如需对原文进行贡献请返回英文原站点）',
     },
     search: {
       provider: 'local',
+      options: {
+        translations: {
+          button: {
+            buttonText: '搜索文档',
+            buttonAriaLabel: '搜索文档',
+          },
+          modal: {
+            displayDetails: '显示详情',
+            resetButtonTitle: '重置搜索',
+            backButtonTitle: '返回',
+            noResultsText: '没有匹配的结果',
+            footer: {
+              selectText: '选择',
+              selectKeyAriaLabel: '选择',
+              navigateText: '切换条目',
+              navigateUpKeyAriaLabel: '上一个',
+              navigateDownKeyAriaLabel: '下一个',
+              closeText: '关闭',
+              closeKeyAriaLabel: '关闭',
+            },
+          },
+        },
+      },
     },
 
     socialLinks: [
@@ -216,18 +243,18 @@ export default withMermaid(defineConfig({
     ],
 
     footer: {
-      message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2021 Pine Wu, 2023-PRESENT Anthony Fu.',
+      message: '在 MIT 开源许可证下发布',
+      copyright: '版权所有 © 2021 Pine Wu，2023-现在 Anthony Fu',
     },
   },
 
   locales: {
     root: {
-      label: 'English',
-    },
-    zh: {
       label: '简体中文 (Community)',
-      link: 'https://shiki.tmrs.site',
+    },
+    en: {
+      label: 'English',
+      link: 'https://shiki.style/',
     },
   },
 

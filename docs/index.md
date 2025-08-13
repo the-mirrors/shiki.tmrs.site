@@ -4,7 +4,7 @@ layout: home
 hero:
   name: "Shiki 式 "
   text: "代码语法高亮工具"
-  tagline: 既美观又强大的语法高亮工具
+  tagline: 美观而强大的语法高亮工具
   image:
     src: /logo.svg
     alt: Shiki Logo
