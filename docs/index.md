@@ -3,32 +3,32 @@ layout: home
 
 hero:
   name: "Shiki 式 "
-  text: "Syntax highlighter"
-  tagline: A beautiful yet powerful syntax highlighter
+  text: "代码语法高亮工具"
+  tagline: 既美观又强大的语法高亮工具
   image:
     src: /logo.svg
     alt: Shiki Logo
   actions:
     - theme: brand
-      text: Get Started
+      text: 快速开始
       link: /guide/
     - theme: alt
-      text: Installation
+      text: 安装
       link: /guide/install/
 
 features:
-  - title: Accurate & Beautiful
+  - title: 精准且美观
     icon: 🌈
-    details: TextMate grammar powered, same engine as your VS Code. Improves with VS Code.
-  - title: Zero Runtime
+    details: 由 TextMate 驱动，与 VS Code 采用相同的引擎，并随之持续改进
+  - title: 零运行时
     icon: ⏱️
-    details: Runs ahead of time, ship zero JavaScript while getting the perfect syntax highlighting.
-  - title: Customizable
+    details: 通过提前运行，即使不加载任何 JavaScript 代码，也可以实现完美语法高亮
+  - title: 可定制
     icon: 🧩
-    details: HAST based. Addons, transformations, highly customizable.
-  - title: ESM & Universal
+    details: 基于 HAST，可以进行高度客制化，支持插件和自定义变换
+  - title: ESM & 通用
     icon: 🎄
-    details: Fully tree-shakable ESM, runs on any JavaScript runtime, Browser, Node.js, Cloudflare Workers, etc.
+    details: 开箱即用的 ESM 模块，支持完整的 Tree-shaking 优化，可在任何 JavaScript 运行时环境，包括浏览器、Node.js、Cloudflare Workers 等中轻松使用
 ---
 
 <HomeDemo />
