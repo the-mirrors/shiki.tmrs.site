@@ -2,15 +2,15 @@
 outline: deep
 ---
 
-# Best Performance Practices
+# 性能优化最佳实践
 
-This guide will help you to improve the performance of your Shiki usage.
+本指南将帮助你提升 Shiki 的使用性能。
 
-## Cache the Highlighter Instance
+## 缓存 Highlighter 实例
 
-The highlighter instance is expensive to create. Most of the time, you should create the highlighter instance once and reuse it for multiple highlight operations (singleton pattern).
+创建一个 Highlighter 实例的开销很大。大多数情况下，你应该在应用中只创建一次实例并复用（单例模式），而不是每次高亮时都重新创建。
 
-For example:
+示例：
 
 ```ts
 import { createHighlighterCore } from 'shiki/core'
@@ -21,21 +21,21 @@ export async function highlightCode(code: string, lang: string) {
   const highlighter = await highlighterPromise
   return highlighter.codeToHtml(code, lang)
 }
-```
+````
 
-When you no longer need a highlighter instance, you can call the `dispose()` method to release the resources. (It can't be GC-ed automatically, you need to do it explicitly.)
+当不再需要 highlighter 时，可以调用 `dispose()` 手动释放资源（不会自动被 GC 回收，必须显式调用）。
 
 ```ts
 highlighter.dispose()
 ```
 
-## Fine-Grained Bundle
+## 细粒捆绑预设
 
-The pre-built bundles are for easy usage, and mostly intended for a Node.js environment where you aren't worried about the bundle size. If you are building a web application or in a resource-constrained environment, it's always better to use the fine-grained bundles to reduce the bundle size and memory usage.
+预构建的 bundle 主要是为了方便使用，适合在 Node.js 环境中对包体积不敏感的场景。如果是构建 Web 应用或在资源受限的环境中，建议使用精细化模块，减少包体积和内存占用。
 
-**Avoid importing `shiki`, `shiki/bundle/full`, `shiki/bundle/web` directly**.
+**避免直接引入 `shiki`、`shiki/bundle/full`、`shiki/bundle/web`**。
 
-Instead, import fine-grained modules like `shiki/core`, `shiki/engine/javascript`, `@shikijs/langs/typescript`, `@shikijs/themes/dark-plus`, etc.
+应改为按需引入精细化模块，例如 `shiki/core`、`shiki/engine/javascript`、`@shikijs/langs/typescript`、`@shikijs/themes/dark-plus` 等：
 
 ```ts
 import { createHighlighterCore } from 'shiki/core'
@@ -56,40 +56,44 @@ const highlighter = await createHighlighterCore({
 })
 ```
 
-To compose the fine-grained bundles easily, we also provide the [`shiki-codegen`](/packages/codegen) tool to generate fine-grained bundles for you.
+如果想更方便地组合精细化模块，可以使用 [`shiki-codegen`](/packages/codegen) 自动生成配置。
+更多细节见[细粒捆绑预设](/guide/bundles#细粒捆绑预设)。
 
-Learn more about [Fine-Grained Bundles](/guide/bundles#fine-grained-bundle).
+## 使用简写
 
-## Use Shorthands
+`createHighlighter` 和 `createHighlighterCore` 会**一次性**加载所有主题和语言，以保证后续高亮操作是同步的。但这会增加启动时间，尤其是在主题和语言较多时。
 
-`createHighlighter` and `createHighlighterCore` load all the themes and languages **upfront** to ensure subsequent highlight operations are synchronous. This can add significant overhead to startup time, especially when you have a lot of themes and languages. Shorthands abstract the theme and language loading process and maintain an internal highlighter instance underneath, only loading the necessary themes and languages when needed. When your highlighting process can be asynchronous, you can use shorthands to reduce startup time.
+简写会在内部维护一个 Highlighter 实例，并在需要时才加载对应主题和语言，适合能接受异步高亮的场景。
 
 ```ts
 import { codeToHtml } from 'shiki'
 
-// Only `javascript` and `nord` will be loaded when calling `codeToHtml`
+// 调用时只会加载 `javascript` 语言和 `nord` 主题
 const html = await codeToHtml('const a = 1', {
   lang: 'javascript',
   theme: 'nord'
 })
 ```
 
-You can also create your own shorthands with fine-grained bundles. Check out the [Create Shorthands with Fine-Grained Bundles](/guide/shorthands#create-shorthands-with-fine-grained-bundles) section for more details.
+你也可以基于细粒捆绑创建自己的简写，参考[使用细粒捆绑预设创建简写](/guide/shorthands#使用细粒捆绑创建简写)。
 
-## JavaScript Engine and Pre-compiled Languages
+## JavaScript 引擎与预编译语言
 
-Shiki provides [two engines](/guide/regex-engines) for executing regular expressions: [`JavaScript`](/guide/regex-engines#javascript-regexp-engine) and [`Oniguruma`](/guide/regex-engines#oniguruma-engine). The Oniguruma engine is WebAssembly-based and compiled from C code, and `JavaScript` is a pure JavaScript engine that translates Oniguruma-flavored regexes to JavaScript regexes.
+Shiki 提供了 [两种正则引擎](/guide/regex-engines)：[`JavaScript`](/guide/regex-engines#javascript-正则引擎) 和 [`Oniguruma`](/guide/regex-engines#oniguruma-引擎)。
 
-If you are bundling Shiki for the web, using the JavaScript engine results in a smaller bundle size and faster startup time. The [precompiled languages](/guide/regex-engines#pre-compiled-languages) can further reduce bundle size and startup time, if your target browsers support the latest RegExp features.
+* **Oniguruma**：基于 WebAssembly，从 C 代码编译而来
+* **JavaScript**：纯 JS 引擎，将 Oniguruma 风格的正则翻译为原生 JS 正则
 
-Check the [RegExp Engines](/guide/regex-engines) guide for more details.
+如果是打包到 Web 环境，JavaScript 引擎体积更小、启动更快。
+配合[预编译语言](/guide/regex-engines#预编译语言)，还能进一步减少包体积和启动时间（前提是目标浏览器支持最新的 RegExp 特性）。
 
-## Use Workers
+更多详情见 [正则引擎](/guide/regex-engines)。
 
-Shiki hightlights code using regular expressions, which can be CPU-intensive. You can offload the highlighting work to a Web Worker/Node Worker to avoid blocking the main thread.
+## 使用 Worker
+
+Shiki 通过正则进行代码高亮，可能会占用较多 CPU。
+可以将高亮任务放到 Web Worker / Node Worker 中，避免阻塞主线程。
 
 ::: info
-
-🚧 We are still working on a guide for creating workers easily.
-
+🚧 我们还在编写更方便的 Worker 使用指南。
 :::
