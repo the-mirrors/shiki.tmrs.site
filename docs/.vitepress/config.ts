@@ -12,14 +12,14 @@ import { version } from '../../package.json'
 import vite from './vite.config'
 
 const GUIDES: DefaultTheme.NavItemWithLink[] = [
-  { text: '快速开始', link: '/guide/' },
+  { text: '介绍', link: '/guide/' },
   { text: '安装与基本使用', link: '/guide/install' },
   { text: '捆绑预设', link: '/guide/bundles' },
   { text: '双颜色主题', link: '/guide/dual-themes' },
   { text: '简写', link: '/guide/shorthands' },
   { text: '最佳性能实践', link: '/guide/best-performance' },
-  { text: '代码装饰', link: '/guide/decorations' },
-  { text: '代码变换', link: '/guide/transformers' },
+  { text: '代码装饰（Decoration）', link: '/guide/decorations' },
+  { text: '代码变换（Transformer）', link: '/guide/transformers' },
   { text: '主题颜色控制', link: '/guide/theme-colors' },
   { text: '正则表达式引擎', link: '/guide/regex-engines' },
   { text: '使用同步代码', link: '/guide/sync-usage' },

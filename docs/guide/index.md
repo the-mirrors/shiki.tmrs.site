@@ -2,47 +2,47 @@
 outline: deep
 ---
 
-# Introduction
+# 介绍
 
 <br>
 
-<span text-brand-yellow text-xl>Shiki</span> <span op75>(式, a Japanese word for ["Style"](https://jisho.org/word/%E5%BC%8F))</span> is a beautiful and powerful syntax highlighter based on TextMate grammar and themes, the same engine as VS Code's syntax highlighting. Provides very accurate and fast syntax highlighting for almost any mainstream programming language.
+<span text-brand-yellow text-xl>Shiki</span> <span op75>(式，日语中表示 [“样式”](https://jisho.org/word/%E5%BC%8F))</span> 是一个基于 TextMate 语法和主题的美观且强大的语法高亮工具，使用与 VS Code 相同的语法高亮引擎。它能为几乎所有主流编程语言提供非常精准且快速的语法高亮。
 
-No custom RegExp to maintain, no custom CSS to maintain, no custom HTML to maintain. And as your favorite languages and themes in VS Code evolve - your syntax highlighting will evolve too.
+无需维护自定义的正则表达式，无需维护自定义 CSS，无需维护自定义 HTML。并且可以与你的 VS Code 中主题和语言支持的更新保持同步。
 
-Oh by the way, all the code blocks in this site are highlighted by Shiki, as you'd expect \:)
+顺便一提，正如你所预期的那样，本网站中的所有代码块都是由 Shiki 高亮的 :)
 
-## Features
+## 特性
 
-- All grammars/themes/wasm served as ESM, lazy-loaded on demand and bundler-friendly.
-- Portable & agnostic. Does not rely on Node.js APIs or the filesystem, works in any modern JavaScript runtime.
-- ESM-only ([CDN Usage](/guide/install#cdn-usage), [CJS Usage](/guide/install#cjs-usage)).
-- [Bundles languages/themes composedly](/guide/bundles#fine-grained-bundle).
-- [Light/Dark themes support](/guide/dual-themes)
-- [`hast` support](/guide/transformers#codetohast)
+- 所有语法/主题/WASM 都以 ESM 格式提供，按需懒加载，且对打包工具友好
+- 便携且与运行环境无关。不依赖 Node.js API 或文件系统，可运行于任何现代 JavaScript 运行时
+- 支持 ESM（[使用 CDN](/guide/install#使用-cdn) [或者使用 CJS](/guide/install#使用-cjs)）
+- [可按需组合打包语言/主题](/guide/bundles#fine-grained-bundle)
+- [支持双颜色主题](/guide/dual-themes)
+- [支持 `hast`](/guide/transformers#codetohast)
 - [Transformers API](/guide/transformers)
 - [Decorations API](/guide/decorations)
-- [TypeScript Twoslash integrations](/packages/twoslash)
-- [Compatible build](/guide/compat)
+- [TypeScript Twoslash 集成](/packages/twoslash)
+- [兼容性构建](/guide/compat)
 
-## Playground
+## 在线演练场
 
-Here is a little playground for you to try out how Shiki highlights your code. The other code blocks in this docs are rendered on the build time and ships statically, while this playground is rendered on the client side in the browser. Themes and languages are loaded on demand.
+这里有一个小型在线演练场，方便你试用 Shiki 的代码高亮效果。本教程中的其他代码块是在构建时渲染并静态发布的，而这个演练场是在浏览器端实时渲染的。主题和语言会按需加载。
 
 <ShikiMiniPlayground />
 
-[Install Shiki](/guide/install) to use it in your project.
+[安装 Shiki](/guide/install) 以在你的项目中使用它。
 
-## Bundle Size
+## 包大小
 
-You can inspect the bundle size in detail on [pkg-size.dev/shiki](https://pkg-size.dev/shiki).
+你可以在 [pkg-size.dev/shiki](https://pkg-size.dev/shiki) 上详细查看包大小信息。
 
-As of `v1.1.6`, measured at 22th, February 2024:
+截至 `v1.1.6`（2024 年 2 月 22 日测量）：
 
-| Bundle              | Size (minified) | Size (gzip) | Notes                                                            |
-| ------------------- | --------------: | ----------: | ---------------------------------------------------------------- |
-| `shiki`             |          6.9 MB |      1.3 MB | All themes and languages as async chunks                         |
-| `shiki/bundle/full` |          6.9 MB |      1.3 MB | Same as `shiki`                                                  |
-| `shiki/bundle/web`  |          4.2 MB |      748 KB | All themes and common web languages as async chunks              |
-| `shiki/core`        |          106 KB |       34 KB | Core engine without any themes or languages, compose on your own |
-| `shiki/wasm`        |          623 KB |      231 KB | WASM binary inlined as base64 string                             |
+| 包名                | 体积（压缩后） | 体积（gzip 后） | 说明                                                           |
+| ------------------- | -------------: | --------------: | -------------------------------------------------------------- |
+| `shiki`             |         6.9 MB |         1.3 MB  | 所有主题和语言按异步块加载                                     |
+| `shiki/bundle/full` |         6.9 MB |         1.3 MB  | 与 `shiki` 相同                                                |
+| `shiki/bundle/web`  |         4.2 MB |         748 KB  | 所有主题和常用 Web 语言按异步块加载                            |
+| `shiki/core`        |         106 KB |          34 KB  | 核心引擎，不包含任何主题或语言，可自行组合                     |
+| `shiki/wasm`        |         623 KB |         231 KB  | 内嵌为 base64 字符串的 WASM 二进制文件                         |
