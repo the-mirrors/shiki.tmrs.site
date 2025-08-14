@@ -1,22 +1,22 @@
-# Shorthands
+# 简写（Shorthands）
 
-The easier way to get started with `shiki` is to use the provided shorthand functions. These will load the necessary themes and languages on demand, and automatically cache them in memory. Different from `createHighlighter` and `createHighlighterCore`, the operations are asynchronous.
+使用 `shiki` 最简单的方式，就是直接用官方提供的**简写函数**。这些函数会按需加载所需的主题和语言，并自动将它们缓存到内存中。与 `createHighlighter` 和 `createHighlighterCore` 不同，这些操作是**异步**的。
 
 ```ts twoslash
 import { codeToHtml } from 'shiki'
 
-const code = 'const a = 1' // input code
+const code = 'const a = 1' // 输入的代码
 const html = await codeToHtml(code, {
   lang: 'javascript',
   theme: 'vitesse-dark'
 })
 
-console.log(html) // highlighted html string
-```
+console.log(html) // 高亮后的 HTML 字符串
+````
 
-## Create Shorthands with Fine-Grained Bundles
+## 使用细粒捆绑创建简写
 
-You can create your own shorthands with fine-grained bundles. Here is an example of creating shorthands with fine-grained bundles:
+你也可以用细粒捆绑方式来自定义自己的简写函数。下面是一个使用细粒捆绑创建简写的示例：
 
 ```ts
 import { createdBundledHighlighter, createSingletonShorthands } from 'shiki/core'
@@ -33,7 +33,7 @@ const BundledTheme = {
   'dark-plus': () => import('@shikijs/themes/dark-plus'),
 }
 
-// This creates your custom 'createHighlighter' function with fine-grained bundles
+// 用细粒捆绑方式创建自定义的 'createHighlighter' 函数
 export const createHighlighter = /* @__PURE__ */ createdBundledHighlighter<
   BundledLanguage,
   BundledTheme
@@ -43,7 +43,7 @@ export const createHighlighter = /* @__PURE__ */ createdBundledHighlighter<
   engine: () => createJavaScriptRegexEngine(),
 })
 
-// This creates the shorthands for you
+// 创建简写函数
 export const {
   codeToHtml,
   codeToHast,
@@ -57,4 +57,4 @@ export const {
 )
 ```
 
-You can also use [`shiki-codegen`](/packages/codegen) to generate the fine-grained bundles for you.
+你还可以使用 [`shiki-codegen`](/packages/codegen) 来为你自动生成细粒捆绑配置。
