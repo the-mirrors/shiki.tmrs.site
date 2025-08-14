@@ -167,7 +167,7 @@ highlighter.codeToHtml('const a = 1', {
 
 导入 `shiki` 时，所有主题和语言都会作为异步代码块被打包。通常情况下，只要你不使用它们，它们就不会被加载，因此不需要考虑。但在某些场景下你希望控制打包的内容，你可以使用核心模块自行组合打包。
 
-更多细节请参阅[细粒度捆绑包](/guide/bundles#fine-grained-bundle)。
+更多细节请参阅[细粒捆绑预设](/guide/bundles#fine-grained-bundle)。
 
 ### 捆绑预设
 

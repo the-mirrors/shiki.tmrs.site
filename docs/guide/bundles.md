@@ -2,31 +2,31 @@
 outline: deep
 ---
 
-# Bundles
+# 捆绑预设
 
-The main `shiki` entries bundles all supported themes and languages via lazy dynamic imports. The efficiency shouldn't be a concern to most of the scenarios as the grammar would only be imported/downloaded when it is used. However, when you bundle Shiki into browsers runtime or web workers, even those files are not imported, they still add up to your dist size. We provide the [fine-grained bundle](#fine-grained-bundle) to help you compose languages and themes one-by-one as you need.
+`shiki` 主入口会通过动态懒加载的方式，将所有支持的主题和语言打包在一起。大多数情况下，这种方式的性能开销可以忽略，因为只有在实际使用某种语法时才会去加载相应的文件。但如果你需要把 Shiki 打进浏览器运行时或 Web Worker，即使这些文件没被加载，它们也会占据构建产物的体积。为此，我们提供了[细粒捆绑预设](#fine-grained-bundle)方式，让你可以按需一个个地引入所需的语言和主题。
 
 ::: info
-If you are building a web application, or in a performance-sensitive environment, it's always better to use the [fine-grained bundles](#fine-grained-bundle) to reduce the bundle size and memory usage. Learn more about [Best Performance Practices](/guide/best-performance).
+如果你在开发 Web 应用，或者处于性能敏感的环境，建议使用[细粒捆绑预设](#fine-grained-bundle)来减少体积和内存占用。更多优化建议请参见[性能最佳实践](/guide/best-performance)。
 :::
 
-## Bundle Presets
+## 使用捆绑预设
 
-To make it easier, we also provide some pre-composed bundles for you to use:
+为了方便，我们也提供了一些预先组合好的打包版本：
 
 ### `shiki/bundle/full`
 
-> [Bundle Size](/guide/#bundle-size): 6.4 MB (minified), 1.2 MB (gzip), async chunks included
+> [包大小](/guide/#包大小)：6.4 MB（压缩后），1.2 MB（gzip），包含异步分块
 
-The full bundle includes all themes and languages, same as the main `shiki` entry.
+完整打包版包含所有主题和语言，与主入口 `shiki` 一致。
 
 ### `shiki/bundle/web`
 
-> [Bundle Size](/guide/#bundle-size): 3.8 MB (minified), 695 KB (gzip), async chunks included
+> [包大小](/guide/#包大小)：3.8 MB（压缩后），695 KB（gzip），包含异步分块
 
-The bundle includes all themes and common web languages like (HTML, CSS, JS, TS, JSON, Markdown, etc.) and some web frameworks (Vue, JSX, Svelte, etc.).
+包含所有主题、常用 Web 语言（HTML、CSS、JS、TS、JSON、Markdown 等）以及部分 Web 框架（Vue、JSX、Svelte 等）。
 
-Use as normal, all functions from `shiki` are also available in the bundle:
+用法与普通版本一致，`shiki` 的全部功能在该包中都可用：
 
 ```ts twoslash
 import {
@@ -40,40 +40,40 @@ const highlighter = await createHighlighter({
   langs: ['html', 'css', 'js'],
   themes: ['github-dark', 'github-light'],
 })
-```
+````
 
-## Fine-grained Bundle
+## 细粒捆绑预设
 
-When importing `shiki`, all the themes and languages are bundled as async chunks. Normally it won't be a concern to you as they are not being loaded if you don't use them. In some cases, if you want to control what to bundle, you can use the core and compose your own bundle.
+在默认情况下，导入 `shiki` 会将所有主题和语言作为异步分块打包进去。虽然不使用它们时不会加载，但在某些情况下你可能希望完全控制打包内容，这时可以使用核心模块自己组合。
 
 ```ts twoslash
 // @noErrors
-// directly import the theme and language modules, only the ones you imported will be bundled.
+// 直接导入主题和语言模块，只会打包你引入的内容
 import nord from '@shikijs/themes/nord'
 
-// `shiki/core` entry does not include any themes or languages or the wasm binary.
+// `shiki/core` 不包含任何主题、语言或 wasm 二进制
 import { createHighlighterCore } from 'shiki/core'
 import { createOnigurumaEngine } from 'shiki/engine/oniguruma'
 
 const highlighter = await createHighlighterCore({
   themes: [
-    // instead of strings, you need to pass the imported module
+    // 需要传入导入的模块，而不是字符串
     nord,
-    // or a dynamic import if you want to do chunk splitting
+    // 也可以使用动态导入来进行代码分割
     import('@shikijs/themes/material-theme-ocean')
   ],
   langs: [
     import('@shikijs/langs/javascript'),
-    // shiki will try to interop the module with the default export
+    // shiki 会尝试使用模块的默认导出
     () => import('@shikijs/langs/css'),
-    // or a getter that returns custom grammar
+    // 也可以使用自定义语法的 getter
     async () => JSON.parse(await fs.readFile('my-grammar.json', 'utf-8'))
   ],
-  // `shiki/wasm` contains the wasm binary inlined as base64 string.
+  // `shiki/wasm` 包含内嵌为 base64 字符串的 wasm 二进制
   engine: createOnigurumaEngine(import('shiki/wasm'))
 })
 
-// optionally, load themes and languages after creation
+// 也可以在创建后再加载主题和语言
 await highlighter.loadTheme(import('@shikijs/themes/vitesse-light'))
 
 const code = highlighter.codeToHtml('const a = 1', {
@@ -82,6 +82,6 @@ const code = highlighter.codeToHtml('const a = 1', {
 })
 ```
 
-::: info
-[Shorthands](/guide/install#shorthands) are only avaliable in bundle presets. For a fine-grained bundle, you can create your own shorthands using [`createSingletonShorthands`](https://github.com/shikijs/shiki/blob/main/packages/core/src/constructors/bundle-factory.ts#L203) or port it yourself.
+::: info 注释
+[简写](/guide/install#简写)仅适用于预设打包版本。精细化打包中，你可以用 [`createSingletonShorthands`](https://github.com/shikijs/shiki/blob/main/packages/core/src/constructors/bundle-factory.ts#L203) 自己创建，或自行实现类似功能。
 :::
