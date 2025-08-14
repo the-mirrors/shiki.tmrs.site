@@ -2,11 +2,11 @@
 outline: deep
 ---
 
-# RegExp Engines
+# 正则表达式引擎
 
-TextMate grammars are based on regular expressions that match tokens. More specifically, they assume that [Oniguruma](https://github.com/kkos/oniguruma) (a powerful regex engine written in C) will be used to interpret the regular expressions. To make this work in JavaScript, we compile Oniguruma to WebAssembly to run in the browser or Node.js.
+TextMate 语法基于正则表达式来匹配标记。通常，我们使用 [Oniguruma](https://github.com/kkos/oniguruma)（一个用 C 语言编写的正则表达式引擎）来解析语法。为了使其在 JavaScript 中运行，我们将 Oniguruma 编译为 WebAssembly，以便在浏览器或 Node.js 中运行。
 
-Shiki also offers the ability to switch the regex engine or provide a custom implementation. To do so, add an `engine` option to `createHighlighter` or `createHighlighterCore`. For example:
+自 v1.15 版本起，我们为用户提供了切换正则表达式引擎并提供自定义实现的功能。在 `createHighlighter` 和 `createHighlighterCore` 中添加 `engine` 选项。例如：
 
 ```ts
 import { createHighlighter } from 'shiki'
@@ -14,15 +14,15 @@ import { createHighlighter } from 'shiki'
 const shiki = await createShiki({
   themes: ['nord'],
   langs: ['javascript'],
-  engine: { /* custom engine */ }
+  engine: { /* 自定义引擎 */ }
 })
 ```
 
-Shiki comes with two built-in engines:
+Shiki 提供了两个内置引擎：
 
-## Oniguruma Engine
+## Oniguruma 引擎
 
-This is the default engine that uses the compiled Oniguruma WebAssembly.
+这是默认的引擎，使用编译后的 Oniguruma WebAssembly。
 
 ```ts
 import { createHighlighter } from 'shiki'
@@ -35,9 +35,9 @@ const shiki = await createShiki({
 })
 ```
 
-## JavaScript RegExp Engine
+## JavaScript 正则表达式引擎
 
-This engine uses JavaScript's native `RegExp`. Since regular expressions used by TextMate grammars are written for Oniguruma, we use [Oniguruma-To-ES](https://github.com/slevithan/oniguruma-to-es) to transpile Oniguruma patterns to native JavaScript regexes.
+这个实验性引擎使用 JavaScript 的原生 `RegExp`。由于 TextMate 语法的正则表达式是基于 Oniguruma 语法风格，可能包含 JavaScript `RegExp` 不支持的语法，因此我们使用 [`oniguruma-to-js`](https://github.com/antfu/oniguruma-to-js) 来简化语法并尝试使其与 JavaScript 的正则表达式兼容。
 
 ```ts {2,4,9}
 import { createHighlighter } from 'shiki'
@@ -54,30 +54,30 @@ const shiki = await createHighlighter({
 const html = shiki.codeToHtml('const a = 1', { lang: 'javascript', theme: 'nord' })
 ```
 
-The advantage of using the JavaScript engine is that it doesn't require loading a large WebAssembly file for Oniguruma. It is also faster for some languages, since the regular expressions run as native JavaScript.
+使用 JavaScript 引擎的优点在于，它不需要加载一个大的 WebAssembly 文件来支持 Oniguruma，并且在某些语法中运行速度更快（因为正则表达式以原生 JavaScript 形式运行）。
 
-Please check the [compatibility table](/references/engine-js-compat) for the support status of languages you are using. As of Shiki 3.9.1, all built-in languages are supported.
+尽管 JavaScript 引擎对 Oniguruma 的模拟非常强大，但在某些边缘情况中，无法保证高亮效果完全相同。此外，还有少数语法不受支持。
+
+请查看[兼容性表](/references/engine-js-compat)以了解您使用的语言的支持状态。大部分语言都是受支持的。
 
 ::: info
-The JavaScript engine is best when running in the browser and in cases when you want to control the bundle size. If you run Shiki on Node.js (or at build time) and bundle size or WebAssembly support is not a concern, the Oniguruma engine ensures maximum language compatibility.
+JavaScript 引擎在浏览器环境中运行以及需要控制包大小时表现最佳。如果你在 Node.js 环境下（或构建时）运行 Shiki，并且不关心包大小或 WebAssembly 支持，那么 Oniguruma 引擎能确保最大程度的语言兼容性。
 :::
 
-### Use with Unsupported Languages
-
-Unlike the Oniguruma engine, the JavaScript engine is strict by default. It will throw an error if it encounters an invalid Oniguruma pattern or a pattern that it cannot convert. If you want best-effort results for unsupported grammars, you can enable the `forgiving` option to suppress any conversion errors:
+JavaScript 引擎默认是严格模式，如果遇到无法转换的模式会抛出错误。如果可以接受匹配不完全，并希望对不支持的语法提供尽力而为的结果，可以启用 `forgiving` 选项以抑制任何转换错误：
 
 ```ts
 const jsEngine = createJavaScriptRegexEngine({ forgiving: true })
-// ...use the engine
+// ...使用该引擎
 ```
 
-This can result in highlighting mismatches, so check your results.
+请你注意，使用这个选项的时候可能会导致语法高亮的错误匹配。
 
-### JavaScript Runtime Target
+### JavaScript 运行时目标
 
-For best results, the JavaScript engine uses the [RegExp `v` flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicodeSets), which is available in Node.js v20+ and ES2024 ([browser compatibility](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicodeSets#browser_compatibility)). For older environments, it automatically uses the `u` flag instead, but this results in a few less grammars being supported.
+为了获得最佳效果，JavaScript 引擎使用了 [RegExp `v` 标志](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicodeSets)，该标志在 Node.js v20+ 和 ES2024 中可用（[浏览器兼容性](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicodeSets#browser_compatibility)）。对于较旧的环境，它会自动改用 `u` 标志，但这会导致支持的语法减少一些。
 
-By default, the runtime target is automatically detected. You can override this behavior by setting the `target` option:
+默认情况下，运行时目标会被自动检测。你可以通过设置 `target` 选项来覆盖此行为：
 
 ```ts
 const jsEngine = createJavaScriptRegexEngine({
@@ -85,19 +85,19 @@ const jsEngine = createJavaScriptRegexEngine({
 })
 ```
 
-### Pre-compiled Languages
+### 预编译语言
 
-Instead of compiling regular expressions on-the-fly, we also provide pre-compiled languages for the JavaScript engine to further reduce startup time.
+除了即时编译正则表达式之外，我们还为 JavaScript 引擎提供预编译语言，以进一步减少启动时间。
 
 ::: warning
-Pre-compiled languages are not yet supported, due to a [known issue](https://github.com/shikijs/shiki/issues/918) that affects many languages. Please use with caution.
+由于一个影响许多语言的[已知问题](https://github.com/shikijs/shiki/issues/918)，预编译语言暂不受支持。请谨慎使用。
 :::
 
 ::: info
-Pre-compiled languages require support for RegExp UnicodeSets (the `v` flag), which requires ES2024 or Node.js 20+, and may not work in older environments. [Can I use](https://caniuse.com/mdn-javascript_builtins_regexp_unicodesets).
+预编译语言需要支持 RegExp UnicodeSets（`v` 标志），这需要 **ES2024** 或 Node.js 20+，并且可能无法在旧环境中工作。[Can I use](https://caniuse.com/mdn-javascript_builtins_regexp_unicodesets)。
 :::
 
-You can install them with `@shikijs/langs-precompiled`, and change your `@shikijs/langs` imports to `@shikijs/langs-precompiled`:
+你可以使用 `@shikijs/langs-precompiled` 安装它们，并将你的 `@shikijs/langs` 导入更改为 `@shikijs/langs-precompiled`：
 
 ```ts
 import { createHighlighterCore } from 'shiki/core'
@@ -119,6 +119,6 @@ const highlighter = await createHighlighterCore({
 })
 ```
 
-If you are not using custom grammars that require transpilation, you can use `createJavaScriptRawEngine` to skip the transpilation step, further reducing bundle size.
+如果你没有使用需要转换的自定义语法，则可以使用 `createJavaScriptRawEngine` 跳过转换步骤，从而进一步减小 bundle 大小。
 
-If you are using [`shiki-codegen`](/packages/codegen), you can generate pre-compiled languages with the `--precompiled` and `--engine=javascript-raw` flags.
+如果你正在使用 [`shiki-codegen`](/packages/codegen)，则可以使用 `--precompiled` 和 `--engine=javascript-raw` 标志生成预编译语言。
