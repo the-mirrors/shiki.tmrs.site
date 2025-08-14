@@ -1,8 +1,8 @@
-# Transformers
+# 代码变换器（Transformers）
 
-Shiki uses [`hast`](https://github.com/syntax-tree/hast), a AST format for HTML, to process the result and generate the HTML.
+Shiki 使用 [`hast`](https://github.com/syntax-tree/hast) —— 一种用于 HTML 的 AST 格式 —— 来处理结果并生成 HTML。
 
-You can provide your own `transformers` to customize the generated HTML by manipulating the hast tree. You can pass custom functions to modify the tree for different types of nodes. For example:
+你可以提供自己的 `transformers`，通过操作 hast 树自定义生成的 HTML。可以为不同类型的节点传入自定义函数来修改它们。例如：
 
 ```ts twoslash
 import { codeToHtml } from 'shiki'
@@ -26,11 +26,11 @@ const code = await codeToHtml('foo\bar', {
     },
   ]
 })
-```
+````
 
-We also provide some common transformers for you to use, see [`@shikijs/transformers`](/packages/transformers) and [`@shikijs/colorized-brackets`](/packages/colorized-brackets) for more details.
+我们也提供了一些常用的变换器，详见 [`@shikijs/transformers`](/packages/transformers) 和 [`@shikijs/colorized-brackets`](/packages/colorized-brackets)。
 
-## Transformer Hooks
+## 变换器钩子（Transformer Hooks）
 
 ```mermaid
 flowchart LR
@@ -45,18 +45,18 @@ flowchart LR
   root --> postprocess
 ```
 
-- `preprocess` - Called before the code is tokenized. You can use this to modify the code before it is tokenized.
-- `tokens` - Called after the code is tokenized. You can use this to modify the tokens.
-- `span` - Called for each `<span>` tag, for each token.
-- `line` - Called for each line `<span>` tag.
-- `code` - Called for each `<code>` tag, wraps all the lines.
-- `pre` - Called for each `<pre>` tag, wraps the `<code>` tag.
-- `root` - The root of HAST tree. Usually with only one child `<pre>` tag.
-- `postprocess` - Called after the HTML is generated, get a chance to modify the final output. Will not be called in `codeToHast`.
+* `preprocess` - 在代码分词前调用，你可以用它在分词前修改代码。
+* `tokens` - 在代码分词后调用，你可以用它修改 tokens。
+* `span` - 对每个 token 的 `<span>` 标签调用。
+* `line` - 对每行的 `<span>` 标签调用。
+* `code` - 对包裹所有行的 `<code>` 标签调用。
+* `pre` - 对包裹 `<code>` 标签的 `<pre>` 标签调用。
+* `root` - HAST 树的根节点，通常只有一个子节点 `<pre>`。
+* `postprocess` - 在 HTML 生成后调用，可以修改最终输出。在 `codeToHast` 中不会调用。
 
-## Meta
+## 元信息（Meta）
 
-Transformers can also access markdown 'meta' strings in [supported integrations](/guide/install#integrations).
+在 [支持的集成](/guide/install#integrations) 中，转换器也可以访问 markdown 的 meta 字符串。
 
 <!-- eslint-skip -->
 
@@ -65,7 +65,7 @@ Transformers can also access markdown 'meta' strings in [supported integrations]
 ```html foo=bar baz-qux="qu ux"
 ````
 
-You can access the raw meta using:
+你可以这样访问原始 meta：
 
 <!-- eslint-skip -->
 
