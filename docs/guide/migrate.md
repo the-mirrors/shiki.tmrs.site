@@ -38,7 +38,7 @@ Shiki 的 v1.0 版本是一次重大的重写，我们借此机会修改了过�
 - 顶级命名导出项 `setCDN`、`loadLanguage`、`loadTheme` 和 `setWasm` 被移除。
 - `BUNDLED_LANGUAGES`、`BUNDLED_THEMES` 被移至 `@shikijs/langs` 和 `@shikijs/themes` 中并分别更名为 `bundledLanguages` 和 `bundledThemes`。
 - `createHighlighter` 的 `theme` 选项被移除，请改用数组形式的 `themes`。
-- 高亮器不再具有内部的默认主题上下文。对于 `codeToHtml` 和 `codeToThemedTokens` 函数，`theme` 选项是必须的。
+-  Highlighter 不再具有内部的默认主题上下文。对于 `codeToHtml` 和 `codeToThemedTokens` 函数，`theme` 选项是必须的。
 - `codeToThemedTokens` 更名为 `codeToTokensBase`，并添加了一个更高级的 `codeToTokens`。
 - `codeToTokens` 默认情况下将 `includeExplanation` 设置为 `false`。
 - `.ansiToHtml` 作为一个特殊的语言 `ansi` 被合并至 `.codeToHtml`。请使用 `.codeToHtml(code, { lang: 'ansi' })`。
@@ -47,7 +47,7 @@ Shiki 的 v1.0 版本是一次重大的重写，我们借此机会修改了过�
 
 ### 生态包
 
-- `shiki-twoslash` 完全重写。它不再是 Shiki 高亮器的包装，而是一个可以插入任何支持转换器的集成 Shiki 转换器，作为 [`@shikijs/twoslash`](/packages/twoslash) 包。
+- `shiki-twoslash` 完全重写。它不再是 Shiki  Highlighter 的包装，而是一个可以插入任何支持变换器的集成 Shiki 变换器，作为 [`@shikijs/twoslash`](/packages/twoslash) 包。
 - `shiki-twoslash` 的集成，例如 `gatsby-remark-shiki-twoslash` 等，会逐渐迁移到通用的 Shiki 版本。在此之前，你可以使用 [`@shikijs/rehype`](/packages/rehype) 或 [`@shikijs/markdown-it`](/packages/markdown-it) 来将 Shiki 集成到元框架。
 - 引入了新的官方集成，如 [`@shikijs/monaco`](/packages/monaco)、[`@shikijs/cli`](/packages/cli)、[`@shikijs/rehype`](/packages/rehype) 以及 [`@shikijs/markdown-it`](/packages/markdown-it)。
 - `shiki-renderer-path` 和 `shiki-renderer-svg` 使用频率较低，现已被废弃。如果你需要它们，请发起一个议题，并带上你的用例，我们会很乐意将它们再加回来。

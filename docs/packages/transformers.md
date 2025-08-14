@@ -6,9 +6,9 @@ outline: deep
 
 <Badges name="@shikijs/transformers" />
 
-Common transformers for Shiki, inspired by [shiki-processor](https://github.com/innocenzi/shiki-processor).
+受 [shiki-processor](https://github.com/innocenzi/shiki-processor) 启发，为 Shiki 设计的常用变换器（Transformers）的集合。
 
-## Install
+## 安装
 
 ::: code-group
 
@@ -34,7 +34,7 @@ deno add npm:@shikijs/transformers
 
 :::
 
-## Usage
+## 使用方法
 
 ```ts twoslash
 // [!code highlight:5]
@@ -57,13 +57,13 @@ const html = await codeToHtml(code, {
 })
 ```
 
-## Unstyled
+## 无样式
 
-Transformers only applies classes and does not come with styles; you can provide your own CSS rules to style them properly.
+变换器只应用到类，并不带有样式，你可以提供自己的 CSS 规则来样式化它们。
 
-## Matching Algorithm
+## 匹配算法
 
-We found that the algorithm for matching comments in v1 is sometime conterintuitive, where we are trying to fix it in a progressive way. Since v1.29.0, we introduced a new `matchAlgorithm` option to most of the transformer for you to toggle between different matching algorithms. Right now, the default is `v1` which is the old algorithm, and `v3` is the new algorithm. When Shiki v3 is landed, the default will be `v3`.
+我们发现 v1 中用于匹配注释的算法有时会违反直觉，我们正在以渐进的方式修复它。自 v1.29.0 起，我们为大多数变换器引入了一个新的 `matchAlgorithm` 选项，允许你在不同的匹配算法之间切换。目前，默认值是 `v1`，即旧算法，而 `v3` 是新算法。当 Shiki v3 发布时，默认值将是 `v3`。
 
 ```ts
 const html = await codeToHtml(code, {
@@ -79,7 +79,7 @@ const html = await codeToHtml(code, {
 
 ### `matchAlgorithm: 'v1'`
 
-The matching algorithm mostly affects the single-line comment matching, in `v1`, it will count the comment line as the first line, while in `v3`, it will count start from the comment line:
+匹配算法主要影响单行注释的匹配，在 `v1` 中，它会将注释行计为第一行，而在 `v3` 中，它将从注释行开始计数：
 
 ```ts
 // [\!code highlight:3]
@@ -90,7 +90,7 @@ console.log('not highlighted')
 
 ### `matchAlgorithm: 'v3'`
 
-In `v3`, the matching algorithm will start counting from the line below the comment:
+在 `v3` 中，匹配算法将从注释行下面的行开始计数：
 
 ```ts
 // [\!code highlight:2]
@@ -99,11 +99,11 @@ console.log('highlighted') // [!code hl]
 console.log('not highlighted')
 ```
 
-## Transformers
+## 变换器
 
 ### `transformerNotationDiff`
 
-Use `[!code ++]` and `[!code --]` to mark added and removed lines.
+使用 `[!code ++]` 和 `[!code --]` 来标记增删的行。
 
 ````md
 ```ts
@@ -113,7 +113,7 @@ console.log('goodbye')
 ```
 ````
 
-Renders (with custom CSS rules):
+渲染成（已样式化）：
 
 ```ts
 console.log('hewwo') // [!code --]
@@ -121,11 +121,11 @@ console.log('hello') // [!code ++]
 console.log('goodbye')
 ```
 
-- `// [!code ++]` outputs: `<span class="line diff add">`
-- `// [!code --]` outputs: `<span class="line diff remove">`
-- The outer `<pre>` tag is modified: `<pre class="has-diff">`
+- `// [!code ++]` 输出：`<span class="line diff add">`
+- `// [!code --]` 输出：`<span class="line diff remove">`
+- 外围的 `<pre>` 标签修改为：`<pre class="has-diff">`
 
-::: details HTML Output
+::: details HTML 输出
 
 ```html
 <!-- Output (stripped of `style` attributes for clarity) -->
@@ -151,7 +151,7 @@ console.log('goodbye')
 
 ### `transformerNotationHighlight`
 
-Use `[!code highlight]` to highlight a line.
+使用 `[!code highlight]` 来高亮显示行：
 
 ````md
 ```ts
@@ -161,7 +161,7 @@ console.log('Not highlighted')
 ```
 ````
 
-Renders (with custom CSS rules):
+渲染成（已样式化）：
 
 ```ts
 console.log('Not highlighted')
@@ -169,10 +169,10 @@ console.log('Highlighted') // [!code highlight]
 console.log('Not highlighted')
 ```
 
-- `// [!code highlight]` outputs: `<span class="line highlighted">`
-- The outer `<pre>` tag is modified: `<pre class="has-highlighted">`
+- `// [!code highlight]` 输出：`<span class="line highlighted">`
+- 外围的 `<pre>` 标签被修改为：`<pre class="has-highlighted">`
 
-You can also highlight multiple lines with a single comment:
+你也可以使用单个注释来高亮多行：
 
 ````md
 ```ts
@@ -190,7 +190,7 @@ console.log('Not highlighted')
 ```
 ````
 
-Renders:
+渲染为：
 
 ```ts
 // [!code highlight:3]
@@ -210,7 +210,7 @@ console.log('Not highlighted')
 
 ### `transformerNotationWordHighlight`
 
-Use `[!code word:Hello]` to highlight the word `Hello` in any subsequent code.
+使用 `[!code word:Hello]` 在接下来的代码高亮所有的 `Hello`。
 
 ````md
 ```ts
@@ -220,7 +220,7 @@ console.log(message) // prints Hello World
 ```
 ````
 
-Renders (with custom CSS rules):
+渲染成（已样式化）：
 
 ```ts
 // [!code word:Hello]
@@ -228,9 +228,9 @@ const message = 'Hello World'
 console.log(message) // prints Hello World
 ```
 
-Outputs: `<span class="highlighted-word">Hello</span>` for matched words.
+输出：匹配到的单词为 `<span class="highlighted-word">Hello</span>`
 
-You can also specify the number of lines to highlight words on, e.g. `[!code word:Hello:1]` will only highlight occurrences of `Hello` on the next line.
+你还可以指定高亮显示的次数，例如 `[!code word:Hello:2]` 会高亮最近的那个 `Hello`。
 
 ````md
 ```ts
@@ -240,7 +240,7 @@ console.log(message) // prints Hello World
 ```
 ````
 
-Renders:
+渲染为：
 
 ```ts
 // [!code word:Hello:1]
@@ -252,7 +252,7 @@ console.log(message) // prints Hello World
 
 ### `transformerNotationFocus`
 
-Use `[!code focus]` to focus a line.
+使用 `[!code focus]` 来聚焦显示行：
 
 ````md
 ```ts
@@ -262,7 +262,7 @@ console.log('Not focused');
 ```
 ````
 
-Renders (with custom CSS rules):
+渲染成（已样式化）：
 
 ```ts
 console.log('Not focused')
@@ -270,10 +270,10 @@ console.log('Focused') // [!code focus]
 console.log('Not focused')
 ```
 
-- Outputs: `<span class="line focused">`
-- The outer `<pre>` tag is modified: `<pre class="has-focused">`
+- 输出：`<span class="line focused">`
+- 外围的 `<pre>` 标签被修改为：`<pre class="has-focused">`
 
-You can also focus multiple lines with a single comment:
+你也可以使用单个注释聚焦多行：
 
 ````md
 ```ts
@@ -284,7 +284,7 @@ console.log('Not focused')
 ```
 ````
 
-Renders:
+渲染为：
 
 ```ts
 // [!code focus:3]
@@ -297,7 +297,7 @@ console.log('Not focused')
 
 ### `transformerNotationErrorLevel`
 
-Use `[!code error]` and `[!code warning]` to mark a line with an error and warning levels.
+使用 `[!code error]` 和 `[!code warning]` 来指定行的日志等级：
 
 ````md
 ```ts
@@ -307,11 +307,11 @@ console.warn('Warning') // [\!code warning]
 ```
 ````
 
-- Outputs: `<span class="line highlighted error">` for errors
-- Outputs: `<span class="line highlighted warning">` for warnings
-- The outer `<pre>` tag is modified: `<pre class="has-highlighted">`
+- 输出：错误为 `<span class="line highlighted error">`
+- 输出：警告为 `<span class="line highlighted warning">`
+- 外围的 `<pre>` 标签被修改为：`<pre class="has-highlighted">`
 
-With some additional CSS rules, you can make it look like this:
+加上一些额外的 CSS 规则，它们可以看起来像这样：
 
 ```ts
 console.log('No errors or warnings')
@@ -323,16 +323,16 @@ console.warn('Warning') // [!code warning]
 
 ### `transformerRenderWhitespace`
 
-Render whitespaces (tabs and spaces) as individual spans, with classes `tab` and `space`.
+将空白字符（Tab 和空格）渲染为单独的标签（具有 `tab` 或 `space` 类名）。
 
-With some additional CSS rules, you can make it look like this:
+使用一些 CSS，可以使其看起来像这样：
 
 <div class="language-js vp-adaptive-theme"><button title="Copy Code" class="copy"></button><span class="lang">js</span><pre v-pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--shiki-light:#393a34;--shiki-dark:#dbd7caee;--shiki-light-bg:#ffffff;--shiki-dark-bg:#121212;" tabindex="0"><code><span class="line"><span style="--shiki-light:#AB5959;--shiki-dark:#CB7676;">function</span><span class="space"> </span><span style="--shiki-light:#59873A;--shiki-dark:#80A665;">block</span><span style="--shiki-light:#999999;--shiki-dark:#666666;">(</span><span class="space"> </span><span style="--shiki-light:#999999;--shiki-dark:#666666;">)</span><span class="space"> </span><span style="--shiki-light:#999999;--shiki-dark:#666666;">{</span></span>
 <span class="line"><span class="space"> </span><span class="space"> </span><span style="--shiki-light:#59873A;--shiki-dark:#80A665;">space</span><span style="--shiki-light:#999999;--shiki-dark:#666666;">(</span><span class="space"> </span><span style="--shiki-light:#999999;--shiki-dark:#666666;">)</span></span>
 <span class="line"><span class="tab">&#9;</span><span class="tab">&#9;</span><span style="--shiki-light:#59873A;--shiki-dark:#80A665;">tab</span><span style="--shiki-light:#999999;--shiki-dark:#666666;">(</span><span class="space"> </span><span style="--shiki-light:#999999;--shiki-dark:#666666;">)</span><span style="--shiki-light:#393A34;--shiki-dark:#DBD7CAEE;"> </span></span>
 <span class="line"><span style="--shiki-light:#999999;--shiki-dark:#666666;">}</span></span></code></pre></div>
 
-::: details Example CSS
+::: details 示例 CSS
 
 ```css
 pre.shiki .tab,
@@ -359,7 +359,7 @@ pre.shiki .space::before {
 
 ### `transformerMetaHighlight`
 
-Highlight lines based on the [meta string](/guide/transformers#meta) provided on the code snippet.
+根据代码片段上提供的[元字符串](/guide/transformers#元)，高亮显示行。
 
 ````md
 ```js {1,3-4}
@@ -370,7 +370,7 @@ console.log('4')
 ```
 ````
 
-Renders (with custom CSS rules):
+渲染成（已样式化）：
 
 ```js {1,3-4}
 console.log('1')
@@ -379,57 +379,57 @@ console.log('3')
 console.log('4')
 ```
 
-- Outputs: `<span class="line highlighted">` for included lines.
+- 输出：包含的行为 `<span class="line highlighted">`
 
 ### `transformerMetaWordHighlight`
 
-Highlight words based on the meta string provided on the code snippet.
+根据代码片段中提供的元字符串，高亮显示词。
 
 ````md
 ```js /Hello/
 const msg = 'Hello World'
 console.log(msg)
-console.log(msg) // prints Hello World
+console.log(msg) // 打印 Hello World
 ```
 ````
 
-Renders (with custom CSS rules):
+渲染成（已样式化）：
 
 ```js /Hello/
 const msg = 'Hello World'
-console.log(msg) // prints Hello World
+console.log(msg) // 打印 Hello World
 ```
 
-Outputs: `<span class="highlighted-word">Hello</span>` for matched words.
+输出：匹配的词为 `<span class="highlighted-word">Hello</span>`
 
 ---
 
 ### `transformerCompactLineOptions`
 
-Support for `shiki`'s `lineOptions` that is removed in `shiki`.
+在 `shiki` 中删除的对 `shiki` v0 的 `lineOptions` 的支持。
 
 ---
 
 ### `transformerRemoveLineBreak`
 
-Remove line breaks between `<span class="line">`. Useful when you set `display: block` to `.line` in CSS.
+删除 `<span class="line">` 之间的换行符。当你在 CSS 中将 `display: block` 设置为 `.line` 时这有可能用。
 
 ---
 
 ### `transformerRemoveNotationEscape`
 
-Transform `// [\!code ...]` to `// [!code ...]`.
-Avoid rendering the escaped notation syntax as it is.
+将 `// [\!code ...]` 转换为 `// [!code ...]`.
+避免按原样呈现转义符号语法。
 
 ---
 
 ### `transformerStyleToClass`
 
-Convert Shiki's inline styles to unique classes.
+将 Shiki 的内联样式转换为唯一的类名。
 
-Class names are generated based on the hash value of the style object with the prefix/suffix you provide. You can put this transformer in multiple highlights passes and then get the CSS at the end to reuse the exact same styles. As Shiki doesn't handle CSS, it's on your integration to decide how to extract and apply/bundle the CSS.
+类名是根据样式对象的哈希值生成的，并带有你提供的前缀/后缀。可以在多次高亮处理时使用该变换器，并最终提取 CSS 以复用完全相同的样式。由于 Shiki 本身不处理 CSS，提取、应用或打包 CSS 的方法需由你的集成逻辑决定。
 
-For example:
+例如：
 
 ```ts
 import { transformerStyleToClass } from '@shikijs/transformers'
@@ -450,13 +450,13 @@ const html = await codeToHtml(code, {
   transformers: [toClass], // [!code highlight]
 })
 
-// The transformer instance exposes some methods to get the CSS
+// 变换器实例提供了获取 CSS 的方法
 const css = toClass.getCSS() // [!code highlight]
 
-// use `html` and `css` in your app
+// 在你的应用中使用 `html` 和 `css`
 ```
 
-HTML output:
+HTML 输出：
 
 ```html
 <pre class="shiki shiki-themes vitesse-dark vitesse-light __shiki_9knfln" tabindex="0"><code><span class="line">

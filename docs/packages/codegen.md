@@ -2,9 +2,9 @@
 
 <Badges name="shiki-codegen" />
 
-Codegen for Shiki to create optimized bundles dedicated for your usage.
+为 Shiki 生成代码，创建专为您的使用而优化的细粒捆绑。
 
-## Usage
+## 用法
 
 ### CLI
 
@@ -16,9 +16,9 @@ npx shiki-codegen \
   ./shiki.bundle.ts
 ```
 
-File `shiki.bundle.ts` will be created with the code that you can use in your project.
+文件 `shiki.bundle.ts` 将被创建，其中包含您可以在项目中使用 的代码。
 
-Then you can use it in your project:
+然后你可以在你的项目中使用它：
 
 ```ts
 import { codeToHtml } from './shiki.bundle'
@@ -26,9 +26,9 @@ import { codeToHtml } from './shiki.bundle'
 const html = await codeToHtml(code, { lang: 'typescript', theme: 'light-plus' })
 ```
 
-### Programmatic
+### 编程方式
 
-You can also use `shiki-codegen` programmatically, and write the generated code to a file:
+你也可以通过编程方式使用 `shiki-codegen`，并将生成的代码写入文件：
 
 ```ts
 import { codegen } from 'shiki-codegen'
@@ -40,5 +40,5 @@ const { code } = await codegen({
   typescript: true
 })
 
-// Write the code to a file
+// 将代码写入文件
 ```

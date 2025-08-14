@@ -6,7 +6,7 @@ outline: deep
 
 <Badges name="@shikijs/twoslash" />
 
-适用于 [Twoslash](https://github.com/twoslashes/twoslash) 的 shiki 转换器，用于在代码块内提供行内的类型悬停显示。
+适用于 [Twoslash](https://github.com/twoslashes/twoslash) 的 shiki 变换器，用于在代码块内提供行内的类型悬停显示。
 
 [TwoSlash 注释参考](https://twoslash.netlify.app/refs/notations)
 
@@ -36,7 +36,7 @@ deno add npm:@shikijs/twoslash
 
 :::
 
-这个包是 shiki 的一个**转换器插件**，这意味着对于每个支持传递 shiki 转换器的集成，你都可以使用此包。
+这个包是 shiki 的一个**变换器插件**，这意味着对于每个支持传递 shiki 变换器的集成，你都可以使用此包。
 
 ```ts twoslash
 import {
@@ -62,7 +62,7 @@ const html = await codeToHtml(`console.log()`, {
 
 ## 渲染器
 
-由于 [`hast`](https://github.com/syntax-tree/hast) 的灵活性，本转换器允许你使用 AST 来自定义每个片段在输出 HTML 中的呈现方式。
+由于 [`hast`](https://github.com/syntax-tree/hast) 的灵活性，本变换器允许你使用 AST 来自定义每个片段在输出 HTML 中的呈现方式。
 
 我们提供了两个内建的渲染器，你也可以创建你自己的渲染器。
 

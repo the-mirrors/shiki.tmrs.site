@@ -32,7 +32,7 @@ const html = highlighter.codeToHtml(code, {
 })
 ```
 
-同样的，你也可以在高亮器创建后载入自定义主题。
+同样的，你也可以在 Highlighter 创建后载入自定义主题。
 
 ```ts twoslash
 // @noErrors

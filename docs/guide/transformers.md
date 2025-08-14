@@ -56,7 +56,7 @@ flowchart LR
 
 ## 元信息（Meta）
 
-在 [支持的集成](/guide/install#integrations) 中，转换器也可以访问 markdown 的 meta 字符串。
+在 [支持的集成](/guide/install#integrations) 中，变换器也可以访问 markdown 的 meta 字符串。
 
 <!-- eslint-skip -->
 

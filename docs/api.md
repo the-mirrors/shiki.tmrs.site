@@ -1,13 +1,13 @@
-# API References
+# API 参考
 
 ## `codeToHast`
 
-You can also get the intermediate `hast` to do custom rendering without serializing them into HTML with `codeToHast`. You can also further integrate the AST with the [unified](https://github.com/unifiedjs) ecosystem.
+你可以使用 `codeToHast` 方法，通过 `hast` 进行自定义渲染，而无需将其序列化为 HTML 代码。你还可以进一步将 AST 与 [unified](https://github.com/unifiedjs) 生态系统集成。
 
 ```ts twoslash
-import { createHighlighter } from 'shiki'
+import { getHighlighter } from 'shiki'
 
-const highlighter = await createHighlighter({
+const highlighter = await getHighlighter({
   themes: ['nord', 'min-light'],
   langs: ['javascript'],
 })

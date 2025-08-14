@@ -1,19 +1,18 @@
 # Next.js
 
-Shiki does not provide an official integration for [Next.js](https://nextjs.org), but it is rather straightforward to use Shiki in Next.js applications.
+Shiki 并未提供 [Next.js](https://nextjs.org) 的官方集成，但在 Next.js 应用中使用 Shiki 相对简单。
 
 ::: info
-Using Shiki on Edge Runtime might cause unintended problems, Shiki relies on lazy imports to load languages and themes.
+在 Edge Runtime 中使用 Shiki 可能会引发意想不到的问题，因为 Shiki 依赖于懒加载导入语言和主题。
 
-Serverless Runtime is recommended.
+推荐使用 Serverless Runtime。
 :::
 
-## React Server Component
+## React 服务器组件
 
-Since Server Components are server-only, you can use the bundled highlighter without worrying the bundle size.
+由于服务器组件仅在服务器上运行，您可以使用打包好的 Highlighter ，而无需担心包的大小。
 
 ```tsx
-import type { BundledLanguage } from 'shiki'
 import { codeToHtml } from 'shiki'
 
 export default function Page() {
@@ -44,9 +43,9 @@ async function CodeBlock(props: Props) {
 }
 ```
 
-### Custom Components
+### 自定义组件
 
-You can also call `codeToHast` to get the HTML abstract syntax tree, and render it using [`hast-util-to-jsx-runtime`](https://github.com/syntax-tree/hast-util-to-jsx-runtime). With this method, you can render your own `pre` and `code` components.
+您还可以调用 `codeToHast` 获取 HTML 抽象语法树，并使用 [`hast-util-to-jsx-runtime`](https://github.com/syntax-tree/hast-util-to-jsx-runtime) 将其渲染。通过此方法，您可以渲染自己的 `pre` 和 `code` 组件。
 
 ```tsx
 import type { JSX } from 'react'
@@ -92,12 +91,12 @@ async function CodeBlock(props: Props) {
 }
 ```
 
-## React Client Component
+## React 客户端组件
 
-For client components, they are pre-rendered on server and hydrated/rendered on client.
-We can start by creating a client `CodeBlock` component.
+对于客户端组件，它们会在服务器上预渲染，并在客户端进行水合和渲染。
+我们可以从创建一个客户端的 `CodeBlock` 组件开始。
 
-Create a `shared.ts` for highlighter:
+创建 `shared.ts` 文件，用于 Highlighter ：
 
 ```ts
 import type { JSX } from 'react'
@@ -121,7 +120,7 @@ export async function highlight(code: string, lang: BundledLanguage) {
 }
 ```
 
-In your `codeblock.tsx`:
+在 `codeblock.tsx` 文件中：
 
 ```tsx
 'use client'
@@ -139,9 +138,9 @@ export function CodeBlock({ initial }: { initial?: JSX.Element }) {
 }
 ```
 
-The `initial` prop can be passed from a server component to pre-render the code block on server.
+`initial` 属性可以通过服务器组件传递，用于在服务器上预渲染代码块。
 
-In your `page.tsx`:
+在 `page.tsx` 中：
 
 ```tsx
 import { CodeBlock } from './codeblock'
@@ -158,20 +157,20 @@ export default async function Page() {
 ```
 
 ::: info
-The above example uses the `shiki/bundle/web` bundle. You can change it to [Fine-grained Bundle](/guide/bundles#fine-grained-bundle) to fully control the bundled languages/themes.
+上述示例使用 `shiki/bundle/web` 包。您可以更改为 [精细化包](/guide/bundles#fine-grained-bundle) 以完全控制打包的语言和主题。
 :::
 
-### Performance
+### 性能
 
-Shiki lazy loads the requested languages and themes, the Next.js bundler can handle lazy imports automatically.
-Importing `shiki` or its web bundle is efficient enough for most Next.js applications, Fine-grained Bundle won't significantly impact the bundle size.
+Shiki 会按需加载请求的语言和主题，Next.js 的打包工具可以自动处理懒加载导入。
+导入 `shiki` 或其 Web 包对于大多数 Next.js 应用来说足够高效，精细化包不会显著影响包的大小。
 
-In addition, you can use the `createHighlighter` API to preload specific languages and themes.
-Please refer to [Highlighter Usage](/guide/install#highlighter-usage) for further details.
+此外，您可以使用 `createHighlighter` API 预加载特定语言和主题。
+请参阅 [ Highlighter 使用](/guide/install#highlighter-usage) 以了解更多详情。
 
-### Highlighter Instance
+###  Highlighter 实例
 
-If you define a highlighter (without `await`) as a global variable, you can reference it directly from server and client components.
+如果您将 Highlighter （未使用 `await`）定义为全局变量，您可以在服务器和客户端组件中直接引用它。
 
 ```ts
 import { createHighlighter } from 'shiki'
@@ -181,7 +180,7 @@ const highlighter = createHighlighter({
   langs: ['javascript'],
 })
 
-// Inside an async server component, or client side `useEffect`
+// 在异步服务器组件或客户端的 `useEffect` 中
 const html = (await highlighter).codeToHtml('const a = 1', {
   lang: 'javascript',
   theme: 'nord'

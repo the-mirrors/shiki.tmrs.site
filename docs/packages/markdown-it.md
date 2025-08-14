@@ -2,9 +2,9 @@
 
 <Badges name="@shikijs/markdown-it" />
 
-[markdown-it](https://markdown-it.github.io/) plugin for Shiki.
+用于 Shiki 的 [markdown-it](https://markdown-it.github.io/) 插件。
 
-## Install
+## 安装
 
 ::: code-group
 
@@ -30,7 +30,7 @@ deno add npm:@shikijs/markdown-it
 
 :::
 
-## Usage
+## 用法
 
 ```ts twoslash
 import Shiki from '@shikijs/markdown-it'
@@ -46,9 +46,9 @@ md.use(await Shiki({
 }))
 ```
 
-## Fine-grained Bundle
+## 细粒捆绑预设
 
-By default, the full bundle of `shiki` will be imported. If you are using a [fine-grained bundle](/guide/bundles#fine-grained-bundle), you can import from `@shikijs/markdown-it/core` and pass your own highlighter:
+默认情况下，将导入 `shiki` 的完整 bundle。如果你使用的是[细粒捆绑预设](/guide/bundles#细粒捆绑预设)，你可以从 `@shikijs/markdown-it/core` 导入并传递你自己的 Highlighter：
 
 ```ts twoslash
 // @noErrors: true
@@ -72,23 +72,23 @@ const md = MarkdownIt()
 md.use(fromHighlighter(highlighter, { /* options */ }))
 ```
 
-## With Shorthands
+## 使用 Shorthands
 
-Shiki's [shorthands](/guide/shorthands) provides on-demand loading of themes and languages, but also makes the highlighting process asynchronous. Unfortunately, `markdown-it` itself [does NOT support async highlighting](https://github.com/markdown-it/markdown-it/blob/master/docs/development.md#i-need-async-rule-how-to-do-it) out of the box.
+Shiki 的 [shorthands](/guide/shorthands) 提供按需加载主题和语言的功能，但也使高亮过程变为异步。不幸的是，`markdown-it` 本身[不支持异步高亮](https://github.com/markdown-it/markdown-it/blob/master/docs/development.md#i-need-async-rule-how-to-do-it)。
 
-To workaround this, you can use [`markdown-it-async`](https://github.com/antfu/markdown-it-async) by [Anthony Fu](https://github.com/antfu). Where Shiki also provides an integration with it, you can import `fromAsyncCodeToHtml` from `@shikijs/markdown-it/async`.
+为了解决这个问题，你可以使用 [Anthony Fu](https://github.com/antfu) 的 [`markdown-it-async`](https://github.com/antfu/markdown-it-async)。Shiki 也提供了与它的集成，你可以从 `@shikijs/markdown-it/async` 导入 `fromAsyncCodeToHtml`。
 
 ````ts twoslash
 import { fromAsyncCodeToHtml } from '@shikijs/markdown-it/async'
 import MarkdownItAsync from 'markdown-it-async'
-import { codeToHtml } from 'shiki' // Or your custom shorthand bundle
+import { codeToHtml } from 'shiki' // 或你的自定义 shorthand bundle
 
-// Initialize MarkdownIt instance with markdown-it-async
+// 使用 markdown-it-async 初始化 MarkdownIt 实例
 const md = MarkdownItAsync()
 
 md.use(
   fromAsyncCodeToHtml(
-    // Pass the codeToHtml function
+    // 传递 codeToHtml 函数
     codeToHtml,
     {
       themes: {
@@ -99,13 +99,13 @@ md.use(
   )
 )
 
-// Use `md.renderAsync` instead of `md.render`
+// 使用 `md.renderAsync` 代替 `md.render`
 const html = await md.renderAsync('# Title\n```ts\nconsole.log("Hello, World!")\n```')
 ````
 
-## Transformer Caveats
+## 变换器（Transformer）注意事项
 
-`markdown-it` defaults to enforcing `<pre><code>` as the outermost wrappers of code block html. If you use a custom Shiki [transformer](/guide/transformers), this behavior may be undesirable. For example, if the transformer produces
+`markdown-it` 默认会将 `<pre><code>` 作为代码块 HTML 的最外层包裹元素。如果你使用自定义的 Shiki [变换器](/guide/transformers)，这种行为可能并不理想。例如，如果变换器生成了
 
 ```html
 <div class="fenced-code-block">
@@ -117,7 +117,7 @@ const html = await md.renderAsync('# Title\n```ts\nconsole.log("Hello, World!")\
 </div>
 ```
 
-the result after `markdown-it` processing will be
+那么经过 `markdown-it` 处理后，结果会变成
 
 ```html
 <pre>
@@ -133,4 +133,4 @@ the result after `markdown-it` processing will be
 </pre>
 ```
 
-Work around this by adding [olets/markdown-it-wrapperless-fence-rule](https://github.com/olets/markdown-it-wrapperless-fence-rule) to your `markdown-it` configuration, or by writing your own `markdown-it` fence rule (see [markdown-it#269](https://github.com/markdown-it/markdown-it/issues/269)).
+你可以通过在 `markdown-it` 配置中添加 [olets/markdown-it-wrapperless-fence-rule](https://github.com/olets/markdown-it-wrapperless-fence-rule) 来规避这种情况，或者编写你自己的 `markdown-it` fence 规则（参考 [markdown-it#269](https://github.com/markdown-it/markdown-it/issues/269)）。

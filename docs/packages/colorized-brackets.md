@@ -6,9 +6,9 @@ outline: deep
 
 <Badges name="@shikijs/colorized-brackets" />
 
-VSCode-style colorized brackets transformer for Shiki.
+一个适用于 Shiki 的 VSCode 风格彩色括号变换器。
 
-## Install
+## 安装
 
 ::: code-group
 
@@ -34,9 +34,9 @@ deno add npm:@shikijs/colorized-brackets
 
 :::
 
-## Usage
+## 使用方法
 
-Add to your Shiki transformers:
+将其添加到你的 Shiki 变换器列表中：
 
 ```ts colorize-brackets
 import { transformerColorizedBrackets } from '@shikijs/colorized-brackets'
@@ -49,9 +49,9 @@ const html = await codeToHtml('let values: number[] = [];', {
 })
 ```
 
-### Colors
+### 配色
 
-Brackets are automatically colored according to your Shiki theme (or themes if using [dual themes](https://shiki.style/guide/dual-themes)), with support for all of Shiki's built-in themes. However, you can customize colors if you've added custom themes to Shiki, or if you want to override the colors of a built-in theme:
+括号的颜色会根据你的 Shiki 主题（或[双主题](https://shiki.style/guide/dual-themes)）自动匹配，支持所有内置主题。不过，如果你添加了自定义主题，或想覆盖内置主题的配色，也可以进行自定义：
 
 ```ts colorize-brackets
 const html = await codeToHtml('let values: number[] = [];', {
@@ -65,13 +65,13 @@ const html = await codeToHtml('let values: number[] = [];', {
 })
 ```
 
-The final color is the mismatched bracket color. The other colors are for each "level" of bracket pair. Any valid CSS color can be used.
+最后一个颜色用于不匹配的括号，其余颜色用于每一层括号配对。可以使用任何有效的 CSS 颜色。
 
-If no bracket colors are found for a theme, it falls back to the default `dark-plus` theme.
+如果某主题没有定义括号颜色，则会回退到默认的 `dark-plus` 主题。
 
-### Brackets
+### 自定义括号
 
-You can customize the bracket pairs:
+可以自定义括号配对：
 
 ```ts colorize-brackets
 const transformer = transformerColorizedBrackets({
@@ -79,9 +79,9 @@ const transformer = transformerColorizedBrackets({
 })
 ```
 
-The above would only colorize `{}` curly brackets. The default config colorizes `[]` square brackets, `{}` curly brackets, `()` parentheses, and `<>` angle brackets (only in TS type annotations).
+上面的配置仅为 `{}` 大括号着色。默认配置会为 `[]` 方括号、`{}` 大括号、`()` 小括号以及 TS 类型注解中的 `<>` 尖括号着色。
 
-For advanced usage, you can specify which TextMate scopes a bracket pair is allowed or denied in, using `scopesAllowList` and `scopesDenyList`. For example, the default config for `<>` angle brackets is:
+高级用法中，可以通过 `scopesAllowList` 和 `scopesDenyList` 指定括号配对适用或排除的 TextMate 范围。例如，默认的 `<>` 尖括号配置如下：
 
 ```ts colorize-brackets
 const bracketPair = {
@@ -94,9 +94,9 @@ const bracketPair = {
 }
 ```
 
-### Language-specific Overrides
+### 语言特定的覆盖
 
-All settings can be overridden for specific languages using the `langs` option:
+所有设置都可以通过 `langs` 选项为特定语言进行覆盖：
 
 ```ts colorize-brackets
 const transformer = transformerColorizedBrackets({
@@ -104,9 +104,9 @@ const transformer = transformerColorizedBrackets({
 })
 ```
 
-### Explicit Trigger
+### 显式触发
 
-If you do not want colorized brackets for all code blocks, you can enable the `explicitTrigger` option:
+如果你不想为所有代码块启用彩色括号，可以启用 `explicitTrigger` 选项：
 
 ```ts colorize-brackets
 const transformer = transformerColorizedBrackets({
@@ -114,14 +114,14 @@ const transformer = transformerColorizedBrackets({
 })
 ```
 
-Then, only code blocks with the `colorize-brackets` [meta string](/guide/transformers#meta) will have bracket colorizing enabled.
+这样，只有带有 `colorize-brackets` [元字符串](/guide/transformers#meta) 的代码块才会启用括号着色。
 
 ````md
 ```ts
-// no bracket colorizing
+// 不启用括号着色
 ```
 
 ```ts colorize-brackets
-// brackets will be colorized
+// 启用括号着色
 ```
 ````
