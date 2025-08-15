@@ -157,13 +157,13 @@ export default async function Page() {
 ```
 
 ::: info
-上述示例使用 `shiki/bundle/web` 包。您可以更改为 [精细化包](/guide/bundles#fine-grained-bundle) 以完全控制打包的语言和主题。
+上述示例使用 `shiki/bundle/web` 包。您可以更改为 [细粒化包](/guide/bundles#fine-grained-bundle) 以完全控制打包的语言和主题。
 :::
 
 ### 性能
 
 Shiki 会按需加载请求的语言和主题，Next.js 的打包工具可以自动处理懒加载导入。
-导入 `shiki` 或其 Web 包对于大多数 Next.js 应用来说足够高效，精细化包不会显著影响包的大小。
+导入 `shiki` 或其 Web 包对于大多数 Next.js 应用来说足够高效，细粒化包不会显著影响包的大小。
 
 此外，您可以使用 `createHighlighter` API 预加载特定语言和主题。
 请参阅 [ Highlighter 使用](/guide/install#highlighter-usage) 以了解更多详情。

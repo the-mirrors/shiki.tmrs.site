@@ -31,11 +31,11 @@ highlighter.dispose()
 
 ## 细粒捆绑预设
 
-预构建的 bundle 主要是为了方便使用，适合在 Node.js 环境中对包体积不敏感的场景。如果是构建 Web 应用或在资源受限的环境中，建议使用精细化模块，减少包体积和内存占用。
+预构建的 bundle 主要是为了方便使用，适合在 Node.js 环境中对包体积不敏感的场景。如果是构建 Web 应用或在资源受限的环境中，建议使用细粒化模块，减少包体积和内存占用。
 
 **避免直接引入 `shiki`、`shiki/bundle/full`、`shiki/bundle/web`**。
 
-应改为按需引入精细化模块，例如 `shiki/core`、`shiki/engine/javascript`、`@shikijs/langs/typescript`、`@shikijs/themes/dark-plus` 等：
+应改为按需引入细粒化模块，例如 `shiki/core`、`shiki/engine/javascript`、`@shikijs/langs/typescript`、`@shikijs/themes/dark-plus` 等：
 
 ```ts
 import { createHighlighterCore } from 'shiki/core'
@@ -56,7 +56,7 @@ const highlighter = await createHighlighterCore({
 })
 ```
 
-如果想更方便地组合精细化模块，可以使用 [`shiki-codegen`](/packages/codegen) 自动生成配置。
+如果想更方便地组合细粒化模块，可以使用 [`shiki-codegen`](/packages/codegen) 自动生成配置。
 更多细节见[细粒捆绑预设](/guide/bundles#细粒捆绑预设)。
 
 ## 使用简写

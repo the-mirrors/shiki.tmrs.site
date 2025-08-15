@@ -83,5 +83,5 @@ const code = highlighter.codeToHtml('const a = 1', {
 ```
 
 ::: info 注释
-[简写](/guide/install#简写)仅适用于预设打包版本。精细化打包中，你可以用 [`createSingletonShorthands`](https://github.com/shikijs/shiki/blob/main/packages/core/src/constructors/bundle-factory.ts#L203) 自己创建，或自行实现类似功能。
+[简写](/guide/install#简写)仅适用于预设打包版本。细粒化打包中，你可以用 [`createSingletonShorthands`](https://github.com/shikijs/shiki/blob/main/packages/core/src/constructors/bundle-factory.ts#L203) 自己创建，或自行实现类似功能。
 :::
