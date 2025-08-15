@@ -5,9 +5,9 @@
 你可以使用 `codeToHast` 方法，通过 `hast` 进行自定义渲染，而无需将其序列化为 HTML 代码。你还可以进一步将 AST 与 [unified](https://github.com/unifiedjs) 生态系统集成。
 
 ```ts twoslash
-import { getHighlighter } from 'shiki'
+import { createHighlighter } from 'shiki'
 
-const highlighter = await getHighlighter({
+const highlighter = await createHighlighter({
   themes: ['nord', 'min-light'],
   langs: ['javascript'],
 })

@@ -3,6 +3,7 @@ node_modules
 
 # development
 cache
+dist
 
 # os related
 .DS_Store
