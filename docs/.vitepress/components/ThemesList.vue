@@ -17,9 +17,9 @@ function preview(id: string) {
     <table>
       <thead>
         <tr>
-          <th>Name</th>
+          <th>名称</th>
           <th>ID</th>
-          <th>Preview</th>
+          <th>预览</th>
         </tr>
       </thead>
       <tbody>
@@ -31,7 +31,7 @@ function preview(id: string) {
           <td>
             <div flex>
               <button
-                title="Preview Example"
+                title="预览示例"
                 ma text-lg
                 @click="preview(l.name)"
               >

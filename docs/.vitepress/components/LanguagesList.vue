@@ -33,20 +33,20 @@ watch(showModel, () => {
   <div>
     <div flex="~ gap-0.5 items-center">
       <input id="radio-all" v-model="bundle" type="radio" name="lang" value="all">
-      <label for="radio-all">Full Bundle</label>
+      <label for="radio-all">完整包</label>
       <div mx2 />
       <input id="radio-web" v-model="bundle" type="radio" name="lang" value="web">
-      <label for="radio-web">Web Bundle</label>
+      <label for="radio-web">Web 包</label>
       <div mx2 />
       <a href="/guide/bundles">?</a>
     </div>
     <table>
       <thead>
         <tr>
-          <th>Name</th>
+          <th>名称</th>
           <th>ID</th>
-          <th>Alias</th>
-          <th>Preview</th>
+          <th>别名</th>
+          <th>预览</th>
         </tr>
       </thead>
       <tbody>
@@ -61,7 +61,7 @@ watch(showModel, () => {
           <td>
             <div flex>
               <button
-                title="Preview Example"
+                title="预览示例"
                 ma text-lg
                 @click="preview(l.name)"
               >
