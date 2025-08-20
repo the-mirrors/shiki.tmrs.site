@@ -73,3 +73,25 @@ flowchart LR
 this.options.meta
 // => { __raw: 'foo=bar baz-qux="qu ux"' }
 ```
+
+## 设置变换器加载顺序
+
+为了兼容性或细粒地控制，可能需要强制指定 Shiki 变换器 的执行顺序。你可以通过 `enforce` 修饰符来控制加载变换器的时机：
+
+* `pre`: 在普通变换器之前调用
+* 默认: 作为普通变换器调用
+* `post`: 在普通变换器之后调用
+
+示例:
+
+```ts twoslash
+import type { ShikiTransformer } from 'shiki'
+
+const customTransformer: ShikiTransformer = {
+  name: 'my-transformer',
+  enforce: 'pre',
+  code(node) {
+    // ...
+  },
+}
+```

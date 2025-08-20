@@ -1,7 +1,7 @@
 {
   "name": "shiki-zh-docs",
   "type": "module",
-  "version": "3.9.2",
+  "version": "3.11.0",
   "private": true,
   "packageManager": "bun@1.2.20",
   "scripts": {
