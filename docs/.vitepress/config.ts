@@ -1,9 +1,9 @@
 import type { DefaultTheme } from 'vitepress'
 import { transformerColorizedBrackets } from '@shikijs/colorized-brackets'
 import { transformerMetaWordHighlight, transformerNotationWordHighlight, transformerRemoveNotationEscape } from '@shikijs/transformers'
-import { defaultHoverInfoProcessor, transformerTwoslash } from '@shikijs/vitepress-twoslash'
+import { defaultHoverInfoProcessor } from '@shikijs/vitepress-twoslash'
 
-import { createFileSystemTypesCache } from '@shikijs/vitepress-twoslash/cache-fs'
+import { createTwoslashWithInlineCache } from '@shikijs/vitepress-twoslash/cache-inline'
 import { bundledThemes } from 'shiki'
 import { defineConfig } from 'vitepress'
 import { groupIconMdPlugin } from 'vitepress-plugin-group-icons'
@@ -71,8 +71,17 @@ const VERSIONS: (DefaultTheme.NavItemWithLink | DefaultTheme.NavItemChildren)[] 
   },
 ]
 
+const withTwoslashInlineCache = createTwoslashWithInlineCache({
+  // errorRendering: 'hover',
+  processHoverInfo(info) {
+    return defaultHoverInfoProcessor(info)
+      // Remove shiki_core namespace
+      .replace(/_shikijs_core\w*\./g, '')
+  },
+})
+
 // https://vitepress.dev/reference/site-config
-export default withMermaid(defineConfig({
+export default withTwoslashInlineCache(withMermaid(defineConfig({
   title: 'Shiki',
   description: '美观而强大的语法高亮工具',
   markdown: {
@@ -133,15 +142,6 @@ export default withMermaid(defineConfig({
           return code
         },
       },
-      transformerTwoslash({
-        // errorRendering: 'hover',
-        processHoverInfo(info) {
-          return defaultHoverInfoProcessor(info)
-            // Remove shiki_core namespace
-            .replace(/_shikijs_core\w*\./g, '')
-        },
-        typesCache: createFileSystemTypesCache(),
-      }),
       transformerRemoveNotationEscape(),
       transformerColorizedBrackets({ explicitTrigger: true }),
     ],
@@ -278,4 +278,4 @@ export default withMermaid(defineConfig({
     ['meta', { name: 'twitter:image', content: 'https://shiki.style/og.png' }],
     ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1.0, viewport-fit=cover' }],
   ],
-}))
+})))
