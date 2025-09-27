@@ -13,6 +13,7 @@ Shiki 并未提供 [Next.js](https://nextjs.org) 的官方集成，但在 Next.j
 由于服务器组件仅在服务器上运行，您可以使用打包好的 Highlighter ，而无需担心包的大小。
 
 ```tsx
+import type { BundledLanguage } from 'shiki'
 import { codeToHtml } from 'shiki'
 
 export default function Page() {
